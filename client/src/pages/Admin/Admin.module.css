@@ -1,0 +1,12 @@
+ .adminOptions{
+    margin: 0 auto;
+ }
+ .adminOptions button{
+    padding: 0.3rem;
+    margin: 0.5rem;
+    font-size: 1.1rem;
+    transition: all 0.3s ease-in-out;
+ }
+ .adminOptions button:hover{
+    background-color:#e1a8fb;
+ }

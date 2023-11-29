@@ -1,0 +1,19 @@
+.toggleSwitch {
+  display: flex;
+  margin: 1rem 0 1rem 0;
+}
+.toggleSwitch div {
+  padding: 0.7rem 1rem 0.7rem;
+}
+.toggleSwitch div p {
+  font-size: 1.2rem;
+  font-size: 1.2rem;
+  font-family: 'Roboto';
+}
+.active {
+  border: 1px solid #6d1e93;
+  border-radius: 2rem;
+  background-color: #6d1e93;
+  color: white;
+  font-weight: bold;
+}

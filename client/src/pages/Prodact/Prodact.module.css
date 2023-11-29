@@ -1,0 +1,77 @@
+.ptodactName {
+  text-transform: uppercase;
+  margin: 1.2rem 0 1rem 0;
+}
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 1rem;
+}
+.prodactImg {
+  position: relative;
+}
+.rate {
+  position: absolute;
+  top: 0;
+}
+.prodactInfo {
+  max-width: 40rem;
+  width: 100%;
+}
+.prodactInfo p {
+  margin-bottom: 0.7rem;
+}
+.prodactInfo p span {
+  padding-left: 0.7rem;
+}
+.addProdact {
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  background-color: #e5a6fb;
+  padding: 0.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.addProdact p {
+  margin-right: 0.7rem;
+  color: #4d1567;
+  font-weight: bold;
+}
+
+.addProdact input[type='number'] {
+  background-color: #e5a6fb;
+  color: #4d1567;
+  font-weight: bold;
+  text-align: end;
+  max-width: 100%;
+  padding: 0.2rem;
+  border: none;
+  font-size: 1.2rem;
+  font-family: 'Roboto', sans-serif;
+}
+.addProdact input[type='number']::-webkit-outer-spin-button,
+.addProdact input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.addProdact input[type='number'],
+.addProdact input[type='number']:hover,
+.addProdact input[type='number']:focus {
+  outline: 0;
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+.btn {
+  padding: 0.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: white;
+  background-color: #6d1e93;
+}
+.btn:active {
+  color: black;
+  background-color: #e5a6fb;
+}

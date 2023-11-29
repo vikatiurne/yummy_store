@@ -1,0 +1,122 @@
+.card {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 3px 5px 15px 0px rgba(110, 30, 147, 0.2);
+  border-radius: 5px;
+}
+.card img {
+  width: 16.25rem;
+  height: 16.25rem;
+}
+.card h3 {
+  margin-top: 0.8rem;
+  margin-bottom: 1.4rem;
+}
+
+.options {
+  padding: 0.4rem;
+  margin-bottom: 1rem;
+  background-color: #e5a6fb;
+  color: white;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  user-select: none;
+}
+.options1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.options1 li {
+  padding: 0.4rem;
+  cursor: pointer;
+}
+.options2 {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.options2 li {
+  padding: 0.4rem;
+  width: 100%;
+  cursor: pointer;
+}
+.options .active {
+  padding: 0.4rem;
+  background-color: white;
+  color: #6d1e93;
+  border-radius: 5px;
+}
+.options .disable {
+  padding: 0.4rem;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.priceInfo {
+  margin-bottom: 0.7rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.priceInfo p {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+.priceInfo button {
+  padding: 0.5rem 0.8rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #6d1e93;
+  border: 1px solid #6d1e93;
+  border-radius: 30px;
+  transition: all 0.5s;
+}
+.iconPlus {
+  margin-right: 0.3rem;
+}
+.priceInfo button span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0.3rem;
+  padding: 0.4rem 0.7rem 0.7rem 0.7rem;
+  font-weight: normal;
+  font-size: 1rem;
+  background-color: #6d1e93;
+  border-radius: 50%;
+  max-width: 1.7rem;
+  max-height: 1.7rem;
+  color: white;
+  transition: all 0.5s;
+}
+
+.priceInfo button:hover {
+  background-color: #6d1e93;
+  color: white;
+}
+.priceInfo button:hover span {
+  background-color: white;
+  color: #6d1e93;
+}
+
+.footerCard {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.moreInfo {
+  display: flex;
+  align-items: flex-end;
+  padding-top: 1rem;
+  color: #6d1e93;
+  text-decoration: underline;
+  cursor: pointer;
+}
+

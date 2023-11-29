@@ -1,0 +1,137 @@
+.orderContainer {
+  margin: 0 auto;
+  padding-top: 4rem;
+  max-width: 50rem;
+  width: 100%;
+}
+.table {
+  border-collapse: collapse;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #6d1e93;
+  width: 100%;
+}
+.table * {
+  padding: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+.table img {
+  max-width: 4rem;
+}
+.table tr {
+  border-bottom: 1px solid #6d1e93;
+}
+
+.opacity {
+  opacity: 0.2;
+}
+.table tr:last-child {
+  border-bottom: none;
+}
+
+.counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.counter button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem 0.7rem 0.4rem 0.7rem;
+  font-weight: normal;
+  font-size: 1.5rem;
+  background-color: #6d1e93;
+  border-radius: 50%;
+  max-width: 1.7rem;
+  max-height: 1.7rem;
+  color: white;
+  transition: all 0.5s;
+}
+.del {
+  font-size: 3.09rem;
+  color: #6d1e93;
+  transition: all 0.3s;
+}
+.update {
+  font-size: 2.6rem;
+  color: #6d1e93;
+  transition: all 0.3s;
+}
+.del:hover {
+  color: red;
+  transform: scale(1.2);
+}
+.update:hover {
+  color: rgb(65, 207, 65);
+  transform: scale(1.2);
+}
+
+.total {
+  padding-top: 2rem;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+.emptyBasket {
+  padding-top: 3rem;
+  text-align: center;
+}
+.emptyBasket img {
+  max-width: 17rem;
+}
+.emptyBasket p {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+}
+.emptyBasket a {
+  font-weight: bold;
+  color: #a069f8;
+}
+.checkout {
+  padding-top: 3rem;
+  text-align: end;
+}
+.checkout button {
+  padding: 0.4rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #6d1e93;
+}
+.checkout button:active {
+  color: black;
+  background-color: #e5a6fb;
+}
+
+.qtyField {
+  display: flex;
+  align-items: center;
+}
+
+.qtyField input[type='number'] {
+  background-color: transparent;
+  text-align: center;
+  max-width: max-content;
+  width: 100%;
+  padding: 0;
+  border: none;
+  font-size: 1.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+.qtyField input[type='number']::-webkit-outer-spin-button,
+.qtyField input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.qtyField input[type='number'],
+.qtyField input[type='number']:hover,
+.qtyField input[type='number']:focus {
+  outline: 0;
+  appearance: none;
+  -moz-appearance: textfield;
+}
+
+td a {
+  color: black;
+}

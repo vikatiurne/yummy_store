@@ -1,0 +1,25 @@
+.rating {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: gold;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+ 
+  .rating p {
+    position: absolute;
+    display: block;
+    color: #6d1e93;
+    font-size: 1rem;
+    z-index: 3;
+  }
+  
+  .star{
+    color: #e5a6fb;
+  }
+  .activeStar{
+    color: gold;
+  }
+  

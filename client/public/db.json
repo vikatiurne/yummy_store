@@ -1,0 +1,84 @@
+{
+  "cakes": [
+    {
+      "id": 0,
+      "imageUrl": "weading.jpg",
+      "name": "Весільний білий",
+      "types": [0],
+      "sizes": [1, 2, 3],
+      "price": 500,
+      "category": 1,
+      "rating": 5
+    },
+    {
+      "id": 1,
+      "imageUrl": "for_her.jpg",
+      "name": "Сквіші",
+      "types": [0, 1],
+      "sizes": [1, 2, 3],
+      "price": 600,
+      "category": 3,
+      "rating": 4
+    },
+    {
+      "id": 2,
+      "imageUrl": "for_him.jpg",
+      "name": "Брауні",
+      "types": [0, 1],
+      "sizes": [1, 2, 3],
+      "price": 550,
+      "category": 4,
+      "rating": 4
+    },
+    {
+      "id": 3,
+      "imageUrl": "dr.jpg",
+      "name": "Дитячий",
+      "types": [0],
+      "sizes": [1, 2, 3],
+      "price": 700,
+      "category": 0,
+      "rating": 5
+    },
+    {
+      "id": 4,
+      "imageUrl": "for_all.jpg",
+      "name": "Oreo",
+      "types": [0, 1],
+      "sizes": [1, 2, 3],
+      "price": 400,
+      "category": 4,
+      "rating": 2
+    },
+    {
+      "id": 5,
+      "imageUrl": "green.jpg",
+      "name": "Зелений",
+      "types": [0, 1],
+      "sizes": [1, 2, 3],
+      "price": 550,
+      "category": 3,
+      "rating": 2
+    },
+    {
+      "id": 6,
+      "imageUrl": "dr2.jpg",
+      "name": "Фіолетовий",
+      "types": [0, 1],
+      "sizes": [1, 2, 3],
+      "price": 600,
+      "category": 0,
+      "rating": 1
+    },
+    {
+      "id": 7,
+      "imageUrl": "hrestini.jpg",
+      "name": "Хрещення",
+      "types": [0],
+      "sizes": [1, 2, 3],
+      "price": 700,
+      "category": 2,
+      "rating": 5
+    }
+  ]
+}

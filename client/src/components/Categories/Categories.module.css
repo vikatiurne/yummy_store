@@ -1,0 +1,61 @@
+.sortByButtons{
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+.sortByButtons > li,
+.sortByButtons > div> li{
+  
+  margin: 0.4rem;
+  padding: 1rem 1.5rem 1rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 1.8rem;
+  border: none;
+  background-color: #f9f9f9;
+  transition: all 0.5s;
+  cursor: pointer;
+  user-select: none;
+}
+
+.sortByButtons .active {
+  background-color: #6d1e93;
+  color: white;
+}
+.sortByButtons div  {
+  display: inline-block;
+  position: relative;
+}
+.arrowDown,
+.arrowTop {
+  width: 10px;
+  height: 10px;
+  margin-left: 0.3rem;
+  transform: rotate(180deg);
+}
+.arrowDown {
+  transform: rotate(0deg);
+}
+.select {
+  position: absolute;
+  z-index: 2;
+  top: 3rem;
+  right: 0;
+  padding: 0.8rem 0 0.8rem;
+  background-color: #f9f9f9;
+  border-radius: 0.6rem;
+}
+.select li {
+  padding: 0.6rem 1rem 0.6rem;
+  font-size: 1rem;
+  font-weight: normal;
+  color: black;
+}
+.select li:hover {
+  background-color: #f4dbfd;
+}
+.containerContent h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

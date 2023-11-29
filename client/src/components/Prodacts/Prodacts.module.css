@@ -1,0 +1,8 @@
+.content{
+    padding-top: 1rem;
+      gap: 3rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+  }
