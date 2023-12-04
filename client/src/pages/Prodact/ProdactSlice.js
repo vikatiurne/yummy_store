@@ -8,7 +8,9 @@ const initialState = {
   prodact: {},
   rating: 0,
   msg: null,
-  size: []
+  size: [],
+  category: '',
+  subcategory: '',
 };
 
 export const fetchGetProdact = createAsyncThunk(
@@ -31,6 +33,15 @@ export const fetchCheckVote = createAsyncThunk(
 export const fetchGetRating = createAsyncThunk(
   'prodact/fetchGetRating',
   async ({ prodactId }) => await GetServices.getRating(prodactId)
+);
+
+export const fetchGetCategory = createAsyncThunk(
+  'prodact/fetchGetCategory',
+  async ({ id }) => await GetServices.getCategory(id)
+);
+export const fetchGetSubcategory = createAsyncThunk(
+  'prodact/fetchGetSubcategory',
+  async ({ id }) => await GetServices.getSubcategory(id)
 );
 
 const ProdactSlice = createSlice({
@@ -73,7 +84,13 @@ const ProdactSlice = createSlice({
       })
       .addCase(fetchCheckVote.rejected, (state) => {
         state.statusRate = 'error';
-      });
+      })
+      .addCase(fetchGetCategory.fulfilled, (state, { payload }) => {
+        state.category = payload.data;
+      })
+      .addCase(fetchGetSubcategory.fulfilled, (state, { payload }) => {
+        state.subcategory = payload.data;
+      })
   },
 });
 

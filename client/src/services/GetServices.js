@@ -32,6 +32,12 @@ export default class GetServices {
   static async getRating(prodactId) {
     return $api.get('/api/rating', { params: { prodactId } });
   }
+  static async getCategory(id) {
+    return $api.get('/api/category/getone', { params: { id } });
+  }
+  static async getSubcategory(id) {
+    return $api.get('/api/subcategory/getone', { params: { id } });
+  }
   static async checkVote(prodactId, userId) {
     return $api.get('/api/rating/check', { params: { prodactId, userId } });
   }

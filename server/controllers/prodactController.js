@@ -1,7 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import path from 'path';
+import fs from 'fs';
 
-import { Prodact, ProdactInfo } from '../models/models.js';
+import { Prodact, ProdactInfo, Rating } from '../models/models.js';
 import { ApiError } from '../error/ApiError.js';
 
 class ProdactController {
@@ -12,7 +13,7 @@ class ProdactController {
       const { img } = req.files;
       let fileName = uuidv4() + '.jpg';
       const __dirname = path.dirname('..');
-      img.mv(path.resolve(__dirname, 'static', fileName));
+      await img.mv(path.resolve(__dirname, 'static', fileName));
 
       const prodact = await Prodact.create({
         name,
@@ -69,9 +70,52 @@ class ProdactController {
     const { id } = req.params;
     const prodact = await Prodact.findOne({
       where: { id },
-      include: { model: ProdactInfo, as: 'info' },
+      include: [{ model: ProdactInfo, as: 'info' }],
     });
     return res.json(prodact);
+  }
+  async deleteProdact(req, res) {
+    const { id } = req.params;
+    const delProd = await Prodact.findByPk(id, {
+      include: [{ model: ProdactInfo, as: 'info', where: { prodactId: id } }],
+    });
+    console.log('DEL:', delProd);
+    const __dirname = path.dirname('..');
+    const pathFile = `${__dirname}/static/${delProd.img}`;
+    fs.unlinkSync(pathFile);
+    await delProd.destroy();
+    // await Rating.destroy({ where: { prodactId: id } });
+    return res.json(delProd);
+  }
+
+  async updateProdact(req, res) {
+    const { id } = req.params;
+
+    try {
+      const { name, price, categoryId, subcategoryId, sizes, info } = req.body;
+      const sizesArr = sizes.split(',');
+      const prodactUpdated = await Prodact.update(
+        {
+          name,
+          price,
+          categoryId,
+          subcategoryId,
+          sizes: sizesArr,
+        },
+        { where: { id } }
+      );
+      if (info.length > 0) {
+        await ProdactInfo.update(
+          {
+            discription: info,
+          },
+          { where: { prodactId: id } }
+        );
+      }
+      return await res.json(prodactUpdated);
+    } catch (error) {
+      next(ApiError.badRequest(error));
+    }
   }
 }
 

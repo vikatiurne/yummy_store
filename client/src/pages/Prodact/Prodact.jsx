@@ -3,10 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import { spinners } from '../../components/UI/Spinner/Spiner';
-import Rating from '../../components/Rating/Rating';
 import { Button } from '../../components';
+import Rating from '../../components/Rating/Rating';
+import EditProdact from '../../components/Modals/EditProdact';
 
-import { fetchGetProdact } from './ProdactSlice';
+import {
+  fetchGetCategory,
+  fetchGetProdact,
+  fetchGetSubcategory,
+} from './ProdactSlice';
 import { fetchAppendProdact } from '../Basket/BasketSlice';
 
 import styles from './Prodact.module.css';
@@ -15,12 +20,14 @@ const Prodact = () => {
   const [inBasket, setInBasket] = useState(false);
   const [qtyInBasket, setQtyInBasket] = useState(null);
   const [qtyAddProdact, setQtyAddProdact] = useState(0);
-  
+  const [modalProdactActive, setModalProdactActive] = useState(false);
+
   const prodact = useSelector((state) => state.prodact.prodact);
   const ratingById = useSelector((state) => state.prodact.rating);
-   const basket = useSelector((state) => state.basket.order);
-  const userId = useSelector((state) => state.auth.user.id);
+  const basket = useSelector((state) => state.basket.order);
+  const user = useSelector((state) => state.auth.user);
   const status = useSelector((state) => state.prodact.status);
+  const isUpdated = useSelector((state) => state.admin.isUpdate);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -42,7 +49,12 @@ const Prodact = () => {
 
   useEffect(() => {
     dispatch(fetchGetProdact({ id }));
-  }, [dispatch, id, ratingById]);
+  }, [dispatch, id, ratingById, isUpdated]);
+
+  useEffect(() => {
+    dispatch(fetchGetCategory({ id: prodact.categoryId }));
+    dispatch(fetchGetSubcategory({ id: prodact.subcategoryId }));
+  }, [dispatch, prodact]);
 
   const changeQtyHandler = (e) => {
     setQtyAddProdact(e.target.value);
@@ -52,7 +64,11 @@ const Prodact = () => {
     const minOrder = parseInt(prodact.sizes[0]);
     let qty;
     qtyAddProdact >= minOrder ? (qty = qtyAddProdact) : (qty = minOrder);
-    dispatch(fetchAppendProdact({ prodactId: id, qty, userId: userId }));
+    dispatch(fetchAppendProdact({ prodactId: id, qty, userId: user.id }));
+  };
+
+  const editHandler = () => {
+    setModalProdactActive(true);
   };
 
   return status !== 'success' ? (
@@ -91,7 +107,18 @@ const Prodact = () => {
         </div>
       </div>
 
-      {inBasket ? (
+      <EditProdact
+        active={modalProdactActive}
+        setActive={() => setModalProdactActive(false)}
+      />
+
+      {user.role === 'ADMIN' ? (
+        <div className={styles.addProdact}>
+          <Button className={styles.btn} onclick={editHandler}>
+            Редагувати
+          </Button>
+        </div>
+      ) : inBasket ? (
         <div className={styles.addProdact}>
           <Link to="/basket">
             <Button className={styles.btn}>

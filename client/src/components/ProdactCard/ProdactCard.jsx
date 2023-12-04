@@ -2,17 +2,19 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaPlus, FaLongArrowAltRight } from 'react-icons/fa';
+import { RiDeleteBin2Line } from 'react-icons/ri';
 
 import Rating from '../Rating/Rating';
 import { fetchAppendProdact } from '../../pages/Basket/BasketSlice';
 
 import styles from './ProdactCard.module.css';
+import { fetchDeleteProdact } from '../../pages/Admin/AdminSlice';
 
 const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
   const [activeSize, setActiveSize] = useState(sizes[0]);
   const [qtyProdact, setQtyProdact] = useState(parseInt(sizes[0]));
 
-  const userId = useSelector((state) => state.auth.user.id);
+  const user = useSelector((state) => state.auth.user);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
 
   const addHandler = () => {
     dispatch(
-      fetchAppendProdact({ prodactId: id, qty: qtyProdact, userId: userId })
+      fetchAppendProdact({ prodactId: id, qty: qtyProdact, userId: user.id })
     );
   };
 
@@ -42,8 +44,13 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
     navigate('/prodact/' + id);
   };
 
+  const deleteHandler = () => {
+    dispatch(fetchDeleteProdact(id))
+  }
+
   return (
     <div className={styles.card}>
+      {user.role === 'ADMIN' && <RiDeleteBin2Line className={styles.iconBin} onClick={deleteHandler}/>}
       <img src={process.env.REACT_APP_API_URL + img} alt={name} />
       <h3>{name}</h3>
       <ul className={styles.options}>

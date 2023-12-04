@@ -6,10 +6,7 @@ import Modal from '../UI/Modal/Modal';
 import Button from '../UI/Button/Button';
 import { spinners } from '../UI/Spinner/Spiner';
 
-import {
-  fetchCreateRating,
-  // fetchGetRating,
-} from '../../pages/Prodact/ProdactSlice';
+import { fetchCreateRating } from '../../pages/Prodact/ProdactSlice';
 
 import styles from './Modals.module.css';
 
@@ -26,7 +23,6 @@ const CreateRating = ({ active, setActive, prodactId }) => {
 
   const voteHandler = () => {
     dispatch(fetchCreateRating({ rating, prodactId }));
-    // dispatch(fetchGetRating({ prodactId }));
     setActive();
   };
 

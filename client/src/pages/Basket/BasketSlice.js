@@ -76,7 +76,6 @@ const BasketSlice = createSlice({
       state.totalPrice = payload;
     },
     resetBasket(state) {
-      console.log('resetBasket')
       state.order = [];
     },
   },
@@ -106,8 +105,8 @@ const BasketSlice = createSlice({
       .addCase(fetchAppendProdact.fulfilled, (state, { payload }) => {
         state.status = 'success';
         if (!!payload) {
-        payload.sort((a, b) => (a.id > b.id ? 1 : -1));
-        state.order = payload;
+          payload.sort((a, b) => (a.id > b.id ? 1 : -1));
+          state.order = payload;
         }
       })
       .addCase(fetchAppendProdact.rejected, (state, { payload }) => {

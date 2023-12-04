@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import CreateServices from '../../services/CreateServices';
+import ProdactServices from '../../services/ProdactServices';
 
 const initialState = {
   status: 'idle',
@@ -7,6 +8,8 @@ const initialState = {
   category: '',
   subcategory: '',
   prodact: [],
+  isDelete: false,
+  isUpdate: false,
 };
 
 export const fetchCreateCategory = createAsyncThunk(
@@ -39,6 +42,19 @@ export const fetchCreateProdact = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
+  }
+);
+
+export const fetchDeleteProdact = createAsyncThunk(
+  'admin/fetchDeleteProdact',
+  async (id) => {
+    return await ProdactServices.delete(id);
+  }
+);
+export const fetchUpdateProdact = createAsyncThunk(
+  'admin/fetchUpdateProdact',
+  async (id) => {
+    return await ProdactServices.update(id);
   }
 );
 
@@ -84,7 +100,23 @@ const AdminSlice = createSlice({
       .addCase(fetchCreateProdact.rejected, (state, { payload }) => {
         state.status = 'error';
         state.error = payload.message;
-      });
+      })
+      .addCase(fetchDeleteProdact.pending, (state) => {
+        state.status = 'loading';
+        state.isDelete = false;
+      })
+      .addCase(fetchDeleteProdact.fulfilled, (state) => {
+        state.status = 'success';
+        state.isDelete = true;
+      })
+      .addCase(fetchUpdateProdact.pending, (state) => {
+        state.status = 'loading';
+        state.isUpdate = false;
+      })
+      .addCase(fetchUpdateProdact.fulfilled, (state) => {
+        state.status = 'success';
+        state.isUpdate = true;
+      })
   },
 });
 

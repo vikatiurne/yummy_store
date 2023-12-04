@@ -30,7 +30,7 @@ const BasketProdact = sequelize.define('basket_prodact', {
 
 const Prodact = sequelize.define('prodact', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  name: { type: DataTypes.STRING, unique: true, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: {
     type: DataTypes.NUMERIC({ precision: 5, decimals: 1, zerofill: false }),
@@ -77,7 +77,7 @@ BasketProdact.belongsTo(Basket);
 BasketProdact.hasOne(Prodact);
 Prodact.belongsTo(BasketProdact);
 
-Prodact.hasMany(Rating);
+Prodact.hasMany(Rating, { onDelete: 'CASCADE' });
 Rating.belongsTo(Prodact);
 
 Category.hasMany(Prodact);
@@ -86,7 +86,7 @@ Prodact.belongsTo(Category);
 Subcategory.hasMany(Prodact);
 Prodact.belongsTo(Subcategory);
 
-Prodact.hasMany(ProdactInfo, { as: 'info' });
+Prodact.hasMany(ProdactInfo, { as: 'info', onDelete: 'CASCADE' });
 ProdactInfo.belongsTo(Prodact);
 
 Category.hasMany(Subcategory);

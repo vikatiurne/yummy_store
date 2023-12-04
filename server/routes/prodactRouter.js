@@ -7,5 +7,7 @@ const router = new Router();
 router.post('/', checkRoleMiddleware('ADMIN'), prodactController.create);
 router.get('/', prodactController.getAll);
 router.get('/:id', prodactController.getOne);
+router.put('/:id', prodactController.deleteProdact);
+router.put('/:id', prodactController.updateProdact);
 
 export { router as prodactRouter };

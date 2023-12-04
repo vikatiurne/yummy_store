@@ -6,6 +6,7 @@ const router = new Router();
 
 router.post('/',checkRoleMiddleware('ADMIN'), subcategoryController.create);
 router.get('/', subcategoryController.getAll);
-// router.delete('/',)
+router.get('/getOne', subcategoryController.getOne);
+
 
 export { router as subcategoryRouter };
