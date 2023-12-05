@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useForm } from 'react-hook-form';
 
+import { fetchUpdateProdact } from '../../pages/Admin/AdminSlice';
 import GetServices from '../../services/GetServices';
 
 import { Modal, Select } from '../index';
 
 import styles from './Modals.module.css';
-import { fetchUpdateProdact } from '../../pages/Admin/AdminSlice';
 
 const EditProdact = ({ active, setActive }) => {
   const prodact = useSelector((state) => state.prodact.prodact);
@@ -20,8 +21,10 @@ const EditProdact = ({ active, setActive }) => {
   const [category, setCategory] = useState(categoryName);
   const [subcategory, setSubcategory] = useState(subcategoryName);
   const [categoryId, setCategoryId] = useState(prodact.categoryId);
+  const [subcategoryId, setSabcategoryId] = useState(prodact.subcategoryId);
 
   const dispatch = useDispatch();
+  const { id } = useParams();
 
   const {
     register,
@@ -42,7 +45,7 @@ const EditProdact = ({ active, setActive }) => {
     },
   });
 
-  const selectHandler = async (e) => {
+  const categoryHandler = async (e) => {
     const name = e.target.value;
     setCategory(name);
     const categories = await GetServices.getCategories();
@@ -50,7 +53,16 @@ const EditProdact = ({ active, setActive }) => {
       (category) => category.name === name
     );
     setCategoryId(filterCategory[0].id);
-    // setSubcategory('Оберіть підкатегорію');
+    setSubcategory('Оберіть підкатегорію');
+  };
+
+  const subcategoryHandler = async (e) => {
+    setSubcategory(e.target.value);
+    const subcategories = await GetServices.getSubcategories();
+    const filterSubcategory = await subcategories.data.filter(
+      (subcategory) => subcategory.name === e.target.value
+    );
+    setSabcategoryId(filterSubcategory[0].id);
   };
 
   const closeEditHandler = () => {
@@ -61,21 +73,17 @@ const EditProdact = ({ active, setActive }) => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    const selectedSubcategory = subcategories.filter(
-      (item) => item.name === subcategory
-    );
     let sizes = `${data.size1},${data.size2},${data.size3}`;
 
     const formData = new FormData();
     formData.append('name', data.prodactName);
-    formData.append('price', data.price);
+    formData.append('price', +data.price);
     formData.append('sizes', sizes);
     formData.append('info', data.info);
     formData.append('categoryId', categoryId);
-    formData.append('subcategoryId', selectedSubcategory[0].id);
-
-    dispatch(fetchUpdateProdact({ id: prodact.id, prodact: formData }));
+    formData.append('subcategoryId', subcategoryId);
+ 
+    dispatch(fetchUpdateProdact({ id, formData }));
     closeEditHandler();
     reset();
   };
@@ -88,7 +96,10 @@ const EditProdact = ({ active, setActive }) => {
       <div className={styles.modalContent}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.options}>
-            <Select name="category" value={category} onchange={selectHandler}>
+            <Select name="category" value={category} onchange={categoryHandler}>
+              {category === 'Оберіть категорію' && (
+                <option value="">Оберіть категорію</option>
+              )}
               {categories.map((item) => (
                 <option key={uuidv4()}>{item.name}</option>
               ))}
@@ -97,13 +108,18 @@ const EditProdact = ({ active, setActive }) => {
             <Select
               name="subcategory"
               value={subcategory}
-              onchange={(e) => setSubcategory(e.target.value)}
+              onchange={subcategoryHandler}
             >
-              {subcategories
-                .filter((item) => item.categoryId === categoryId)
-                .map((item) => (
-                  <option key={uuidv4()}>{item.name}</option>
-                ))}
+              {subcategory === 'Оберіть підкатегорію' && (
+                <option value="">Оберіть підкатегорію</option>
+              )}
+              {!categoryId
+                ? subcategories.map((item) => (
+                    <option key={uuidv4()}>{item.name}</option>
+                  ))
+                : subcategories
+                    .filter((item) => item.categoryId === categoryId)
+                    .map((item) => <option key={uuidv4()}>{item.name}</option>)}
             </Select>
           </div>
           <div className={styles.priceName}>

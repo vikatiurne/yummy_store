@@ -51,7 +51,6 @@ const CreateProdact = ({ active, setActive }) => {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     const selectedSubcategory = subcategories.filter(
       (item) => item.name === subcategory
     );

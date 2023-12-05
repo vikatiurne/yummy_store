@@ -47,7 +47,7 @@ const Header = () => {
     dispatch(resetBasket());
     navigate('/');
   };
-  console.log('isAuth:', isAuth);
+
   return (
     <div className={styles.logoWrapper}>
       <Button className={styles.basket}>

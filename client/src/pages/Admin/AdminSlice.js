@@ -47,14 +47,22 @@ export const fetchCreateProdact = createAsyncThunk(
 
 export const fetchDeleteProdact = createAsyncThunk(
   'admin/fetchDeleteProdact',
-  async (id) => {
-    return await ProdactServices.delete(id);
+  async (id, { rejectWithValue }) => {
+    try {
+      return await ProdactServices.delete(id);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 export const fetchUpdateProdact = createAsyncThunk(
   'admin/fetchUpdateProdact',
-  async (id) => {
-    return await ProdactServices.update(id);
+  async ({ id, formData }, { rejectWithValue }) => {
+    try {
+      return await ProdactServices.update(id, formData);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
@@ -109,6 +117,10 @@ const AdminSlice = createSlice({
         state.status = 'success';
         state.isDelete = true;
       })
+      .addCase(fetchDeleteProdact.rejected, (state, { payload }) => {
+        state.status = 'error';
+        state.error = payload.message;
+      })
       .addCase(fetchUpdateProdact.pending, (state) => {
         state.status = 'loading';
         state.isUpdate = false;
@@ -117,6 +129,10 @@ const AdminSlice = createSlice({
         state.status = 'success';
         state.isUpdate = true;
       })
+      .addCase(fetchUpdateProdact.rejected, (state, { payload }) => {
+        state.status = 'error';
+        state.error = payload.message;
+      });
   },
 });
 

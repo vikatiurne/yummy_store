@@ -45,12 +45,15 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
   };
 
   const deleteHandler = () => {
-    dispatch(fetchDeleteProdact(id))
-  }
+    console.log('id:', id);
+    dispatch(fetchDeleteProdact(id));
+  };
 
   return (
     <div className={styles.card}>
-      {user.role === 'ADMIN' && <RiDeleteBin2Line className={styles.iconBin} onClick={deleteHandler}/>}
+      {user.role === 'ADMIN' && (
+        <RiDeleteBin2Line className={styles.iconBin} onClick={deleteHandler} />
+      )}
       <img src={process.env.REACT_APP_API_URL + img} alt={name} />
       <h3>{name}</h3>
       <ul className={styles.options}>
