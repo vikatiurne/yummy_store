@@ -82,7 +82,7 @@ const EditProdact = ({ active, setActive }) => {
     formData.append('info', data.info);
     formData.append('categoryId', categoryId);
     formData.append('subcategoryId', subcategoryId);
- 
+
     dispatch(fetchUpdateProdact({ id, formData }));
     closeEditHandler();
     reset();
@@ -123,42 +123,79 @@ const EditProdact = ({ active, setActive }) => {
             </Select>
           </div>
           <div className={styles.priceName}>
-            <input
-              className={!!errors.prodactName ? styles.redBorder : null}
-              {...register('prodactName', {
-                required: true,
-              })}
-            />
+            <div>
+              <input
+                className={!!errors.prodactName ? styles.redBorder : null}
+                {...register('prodactName', {
+                  required: true,
+                })}
+              />
+            </div>
 
-            <input
-              type="number"
-              className={!!errors.price ? styles.redBorder : null}
-              {...register('price', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.price ? styles.redBorder : null}
+                {...register('price', {
+                  required: true,
+                  pattern: {
+                    value: /(^(\d+)$)/g,
+                    message: 'Поле має містити тільки цифри',
+                  },
+                })}
+              />
+
+              {errors?.price && <p>{errors?.price?.message}</p>}
+            </div>
           </div>
+
           <div className={styles.sizes}>
-            <input
-              className={!!errors.size1 ? styles.redBorder : null}
-              {...register('size1', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.size1 ? styles.redBorder : null}
+                {...register('size1', {
+                  required: true,
+                  pattern: {
+                    value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
+                    message: 'Поле має містити цифри та букви',
+                  },
+                })}
+              />
+              {errors?.size1 && (
+                <p className={styles.errSize}>{errors?.size1?.message}</p>
+              )}
+            </div>
 
-            <input
-              className={!!errors.size2 ? styles.redBorder : null}
-              {...register('size2', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.size2 ? styles.redBorder : null}
+                {...register('size2', {
+                  required: true,
+                  pattern: {
+                    value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
+                    message: 'Поле має містити цифри та букви',
+                  },
+                })}
+              />
+              {errors?.size2 && (
+                <p className={styles.errSize}>{errors?.size2?.message}</p>
+              )}
+            </div>
 
-            <input
-              className={!!errors.size3 ? styles.redBorder : null}
-              {...register('size3', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.size3 ? styles.redBorder : null}
+                {...register('size3', {
+                  required: true,
+                  pattern: {
+                    value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
+                    message: 'Поле має містити цифри та букви',
+                  },
+                })}
+              />
+              {errors?.size3 && (
+                <p className={styles.errSize}>{errors?.size3?.message}</p>
+              )}
+            </div>
           </div>
 
           <textarea

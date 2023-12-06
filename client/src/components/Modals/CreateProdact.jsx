@@ -41,7 +41,6 @@ const CreateProdact = ({ active, setActive }) => {
     setSubcategory('Оберіть підкатегорію');
   };
 
-  
   const closeSubcategoryHandler = () => {
     setActive();
     setSubcategory('Оберіть підкатегорію');
@@ -105,47 +104,82 @@ const CreateProdact = ({ active, setActive }) => {
             </Select>
           </div>
           <div className={styles.priceName}>
-            <input
-              className={!!errors.prodactName ? styles.redBorder : null}
-              placeholder="Назва продукта"
-              {...register('prodactName', {
-                required: true,
-              })}
-            />
+            <div>
+              <input
+                className={!!errors.prodactName ? styles.redBorder : null}
+                placeholder="Назва продукта"
+                {...register('prodactName', {
+                  required: true,
+                })}
+              />
+            </div>
 
-            <input
-              type="number"
-              className={!!errors.price ? styles.redBorder : null}
-              placeholder="Вартість продукта"
-              {...register('price', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.price ? styles.redBorder : null}
+                placeholder="Вартість продукта"
+                {...register('price', {
+                  required: true,
+                  pattern: {
+                    value: /(^(\d+)$)/g,
+                    message: 'Поле має містити тільки цифри',
+                  },
+                })}
+              />
+
+              {errors?.price && <p>{errors?.price?.message}</p>}
+            </div>
+
           </div>
+          
           <div className={styles.sizes}>
-            <input
-              className={!!errors.size1 ? styles.redBorder : null}
-              placeholder="Розмір 1"
-              {...register('size1', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.size1 ? styles.redBorder : null}
+                placeholder="Розмір 1"
+                {...register('size1', {
+                  required: true,
+                  pattern: {
+                    value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
+                    message:
+                      'Поле має містити цифри та букви',
+                  },
+                })}
+              />
+              {errors?.size1 && <p className={styles.errSize}>{errors?.size1?.message}</p>}
+            </div>
 
-            <input
-              className={!!errors.size2 ? styles.redBorder : null}
-              placeholder="Розмір 2"
-              {...register('size2', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.size2 ? styles.redBorder : null}
+                placeholder="Розмір 2"
+                {...register('size2', {
+                  required: true,
+                  pattern: {
+                    value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
+                    message:
+                      'Поле має містити цифри та букви',
+                  },
+                })}
+              />
+              {errors?.size2 && <p className={styles.errSize}>{errors?.size2?.message}</p>}
+            </div>
 
-            <input
-              className={!!errors.size3 ? styles.redBorder : null}
-              placeholder="Розмір 3"
-              {...register('size3', {
-                required: true,
-              })}
-            />
+            <div className={styles.errorMessage}>
+              <input
+                className={!!errors.size3 ? styles.redBorder : null}
+                placeholder="Розмір 3"
+                {...register('size3', {
+                  required: true,
+                  pattern: {
+                    value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
+                    message:
+                      'Поле має містити цифри та букви',
+                  },
+                })}
+              />
+              {errors?.size3 && <p className={styles.errSize}>{errors?.size3?.message}</p>}
+            </div>
           </div>
           <label className={styles.fileUpload}>
             <input
@@ -156,9 +190,10 @@ const CreateProdact = ({ active, setActive }) => {
                     ['image/jpeg', 'image/png', 'image/gif'].includes(
                       files[0]?.type
                     ) || 'Формат файла має бути PNG, JPEG або GIF',
-                  lessThan10MB: files => files[0]?.size < 10000000 ||
+                  lessThan10MB: (files) =>
+                    files[0]?.size < 10000000 ||
                     'Розмір зображення не більше 10MB',
-                    fileName: (files)=> setFileName(files[0]?.name)
+                  fileName: (files) => setFileName(files[0]?.name),
                 },
               })}
             />

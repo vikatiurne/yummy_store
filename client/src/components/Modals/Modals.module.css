@@ -108,3 +108,11 @@ input[type="file"] {
 .control button{
   margin: 0.5rem;
 }
+.errorMessage {
+  color: red;
+  font-size: 0.7rem;
+}
+
+.errSize{
+  max-width: 7rem;
+}
