@@ -76,22 +76,17 @@ class ProdactController {
   }
   async deleteProdact(req, res) {
     const { id } = req.params;
-    console.log('idDEL:', id);
     const delProd = await Prodact.findByPk(id, {
       include: [{ model: ProdactInfo, as: 'info' }],
-      // include: [{ model: ProdactInfo, as: 'info', where: { prodactId: id } }],
     });
-    console.log('DEL:', delProd);
     const __dirname = path.dirname('..');
     const pathFile = `${__dirname}/static/${delProd.img}`;
     fs.unlinkSync(pathFile);
     await delProd.destroy();
     return res.json(delProd);
   }
-
   async updateProdact(req, res) {
     const { id } = req.params;
-    console.log('idUP:', id);
     try {
       const { name, price, categoryId, subcategoryId, sizes, info } = req.body;
       const sizesArr = sizes.split(',');

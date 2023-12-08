@@ -20,6 +20,28 @@ class SubcategoryController {
       next(error);
     }
   }
+  async delete(req, res, next) {
+    try {
+      const { id } = req.params;
+      const delSubcategory = await Subcategory.destroy({ where: { id } });
+      return res.json(delSubcategory);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async update(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { subcategoryName } = req.body;
+      const updatedSubcategory = await Subcategory.update(
+        { name: subcategoryName },
+        { where: { id } }
+      );
+      return res.json(updatedSubcategory);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export const subcategoryController = new SubcategoryController();

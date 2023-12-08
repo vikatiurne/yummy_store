@@ -5,13 +5,13 @@ export default class CreateServices {
   static async createCategory(name) {
     return await $api.post('/api/category', { name });
   }
-  static async createSubcategory(name, categoryName) {
+  static async createSubcategory(name, categoryId) {
     try {
-      const categories = await GetServices.getCategories();
-      const selectedCategory = await categories.data.filter(
-        (item) => item.name === categoryName
-      );
-      const categoryId = selectedCategory[0].id;
+      // const categories = await GetServices.getCategories();
+      // const selectedCategory = await categories.data.filter(
+      //   (item) => item.name === categoryName
+      // );
+      // const categoryId = selectedCategory[0].id;
       return $api.post('/api/subcategory', { name, categoryId });
     } catch (error) {
       return null;

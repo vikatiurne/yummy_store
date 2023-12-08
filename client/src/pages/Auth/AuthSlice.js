@@ -85,7 +85,6 @@ const authSlice = createSlice({
         if (!!payload.data.user) {
           state.isAuth = true;
           state.user = payload.data.user;
-          console.log('token:', payload.data.accessToken)
           localStorage.setItem('token', payload.data.accessToken);
         } else {
           state.error = payload.data.message;
@@ -190,7 +189,6 @@ const authSlice = createSlice({
       })
       .addCase(fetchGetGoogleUser.rejected, (state, { payload }) => {
         state.status = 'error';
-        console.log(payload)
         // state.error = payload.message
       })
       .addCase(fetchGetRedirectUrl.fulfilled, (state, { payload }) => {

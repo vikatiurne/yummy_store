@@ -1,0 +1,29 @@
+.form {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.editName,
+.redBorder {
+  padding: 0.4rem;
+  background-color: #c9b3de;
+  color: wheat;
+  text-transform: uppercase;
+  margin-right: 0.3rem;
+}
+.redBorder:focus,
+.editName:focus {
+  outline: none;
+}
+.errorMessage {
+  position: absolute;
+  bottom: -0.8rem;
+  font-size: 0.8rem;
+  color: red;
+  text-transform: lowercase;
+}
+.iconCancel {
+  color: #d18d8d;
+  font-size: 2.2rem;
+  transform: rotate(90deg);
+}

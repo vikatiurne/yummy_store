@@ -4,15 +4,11 @@ import { tokenService } from '../service/token-service.js';
 export default function checkRoleMiddleware(role) {
   return function (req, res, next) {
     try {
-      const autorizationHeader = req.headers.authorization;
-      if (!autorizationHeader) {
+      const { refreshToken } = req.cookies;
+      if (!refreshToken) {
         return next(ApiError.unauthorizedError());
       }
-      const accessToken = autorizationHeader.split(' ')[1];
-      if (!accessToken) {
-        return next(ApiError.unauthorizedError());
-      }
-      const userData = tokenService.validateAccessToken(accessToken);
+      const userData = tokenService.validateRefreshToken(refreshToken);
       if (!userData) {
         return next(ApiError.unauthorizedError());
       }

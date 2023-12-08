@@ -80,16 +80,16 @@ Prodact.belongsTo(BasketProdact);
 Prodact.hasMany(Rating, { onDelete: 'CASCADE' });
 Rating.belongsTo(Prodact);
 
-Category.hasMany(Prodact);
+Category.hasMany(Prodact, { onDelete: 'CASCADE' });
 Prodact.belongsTo(Category);
 
-Subcategory.hasMany(Prodact);
+Subcategory.hasMany(Prodact, { onDelete: 'CASCADE' });
 Prodact.belongsTo(Subcategory);
 
 Prodact.hasMany(ProdactInfo, { as: 'info', onDelete: 'CASCADE' });
 ProdactInfo.belongsTo(Prodact);
 
-Category.hasMany(Subcategory);
+Category.hasMany(Subcategory, { onDelete: 'CASCADE' });
 Subcategory.belongsTo(Category);
 
 export {

@@ -8,9 +8,9 @@ import Rating from '../../components/Rating/Rating';
 import EditProdact from '../../components/Modals/EditProdact';
 
 import {
-  fetchGetCategory,
+  fetchGetCategoryById,
   fetchGetProdact,
-  fetchGetSubcategory,
+  fetchGetSubcategoryById,
 } from './ProdactSlice';
 import { fetchAppendProdact } from '../Basket/BasketSlice';
 
@@ -52,8 +52,8 @@ const Prodact = () => {
   }, [dispatch, id, ratingById, isUpdated]);
 
   useEffect(() => {
-    dispatch(fetchGetCategory({ id: prodact.categoryId }));
-    dispatch(fetchGetSubcategory({ id: prodact.subcategoryId }));
+    dispatch(fetchGetCategoryById({ id: prodact.categoryId }));
+    dispatch(fetchGetSubcategoryById({ id: prodact.subcategoryId }));
   }, [dispatch, prodact]);
 
   const changeQtyHandler = (e) => {

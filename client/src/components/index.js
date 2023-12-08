@@ -7,8 +7,6 @@ export { default as LoginForm } from './LoginForm/LoginForm';
 export { default as CheckoutForm } from './CheckoutForm/CheckoutForm';
 export { default as ForgotPassword } from './ForgotPassword/ForgotPassword';
 export { default as AdminPanel } from './AdminPanel/AdminPanel';
-export { default as CreateCategory } from './Modals/CreateCategory';
-export { default as CreateSubcategory } from './Modals/CreateSubcategory';
 export { default as CreateProdact } from './Modals/CreateProdact';
 export { default as Button } from '../components/UI/Button/Button';
 export { default as Select } from '../components/UI/Select/Select';
