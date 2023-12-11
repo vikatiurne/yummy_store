@@ -36,7 +36,7 @@ const Admin = () => {
   return (
     <>
       <div className={styles.adminOptions}>
-      <Button onclick={editCategoryHandler}>Редагувати категорію\підкатегорію</Button>
+      <Button onclick={editCategoryHandler}>Редагувати категорії\підкатегорії</Button>
         <Button onclick={prodactHandler}>Додати продукт</Button>
       
         <Edit

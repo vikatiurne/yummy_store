@@ -6,7 +6,7 @@
 .editName,
 .redBorder {
   padding: 0.4rem;
-  background-color: #c9b3de;
+  background-color: #553f69;
   color: wheat;
   text-transform: lowercase;
   margin-right: 0.3rem;
@@ -27,3 +27,6 @@
   font-size: 2.2rem;
   transform: rotate(90deg);
 }
+.check:hover{
+  background-color: white !important;
+  }

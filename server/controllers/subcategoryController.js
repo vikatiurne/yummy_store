@@ -1,5 +1,7 @@
-import { Subcategory } from '../models/models.js';
+import { Prodact, Subcategory } from '../models/models.js';
 import { subcategoryService } from '../service/subcategory-service.js';
+import path from 'path';
+import fs from 'fs';
 
 class SubcategoryController {
   async create(req, res) {
@@ -23,6 +25,17 @@ class SubcategoryController {
   async delete(req, res, next) {
     try {
       const { id } = req.params;
+      const prodact = await Prodact.findAll({ where: { subcategoryId: id } });
+      if (!!prodact) {
+        const images = [];
+        prodact.map((item) => images.push(item.img));
+
+        images.map((img) => {
+          const __dirname = path.dirname('..');
+          const pathFile = `${__dirname}/static/${img}`;
+          fs.unlinkSync(pathFile);
+        });
+      }
       const delSubcategory = await Subcategory.destroy({ where: { id } });
       return res.json(delSubcategory);
     } catch (error) {

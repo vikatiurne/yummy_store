@@ -18,6 +18,7 @@ const Categories = () => {
   const categories = useSelector((state) => state.home.category);
   const subcategories = useSelector((state) => state.home.subcategory);
   const categoryId = useSelector((state) => state.home.categoryId);
+  const subcategoryId = useSelector((state) => state.home.subcategoryId);
 
   const dispatch = useDispatch();
 
@@ -26,15 +27,32 @@ const Categories = () => {
       const currentCategory = categories.filter(
         (item) => item.id === categoryId
       );
-      const name = currentCategory[0].name;
-      setActiveItem(name);
-      setSelectedSort(name);
+      if (!!currentCategory.length) {
+        const name = currentCategory[0].name;
+        setActiveItem(name);
+        setSelectedSort(name);
+      } else {
+        setActiveItem(null);
+        setSelectedSort(null);
+      }
     }
-  }, [categories, categoryId, dispatch]);
+  }, [categories, categoryId]);
+
+  useEffect(() => {
+    if (subcategoryId) {
+      const currentSubcategory = subcategories.filter(
+        (item) => item.id === subcategoryId
+      );
+      currentSubcategory.length !== 0
+        ? setSubcategory(currentSubcategory[0].name)
+        : setSubcategory('');
+    }
+  }, [subcategories, subcategoryId]);
 
   const clickAllCategoryHandler = () => {
     setActiveItem(null);
     dispatch(selectedCategory(null));
+    dispatch(selectedSubcategory(null));
     setSubcategory('');
   };
 
@@ -46,10 +64,9 @@ const Categories = () => {
     dispatch(selectedSubcategory(null));
   };
 
-  const clickSubcategoryHandler = (name, id) => {
-    setSubcategory(name);
-    setVisibleSubcategoryList(false);
+  const clickSubcategoryHandler = (id) => {
     dispatch(selectedSubcategory(id));
+    setVisibleSubcategoryList(false);
   };
 
   const renderSubcategory = (
@@ -57,10 +74,7 @@ const Categories = () => {
       {subcategories
         .filter((item) => item.categoryId === categoryId)
         .map((item) => (
-          <li
-            key={uuidv4()}
-            onClick={() => clickSubcategoryHandler(item, item.id)}
-          >
+          <li key={uuidv4()} onClick={() => clickSubcategoryHandler(item.id)}>
             {item.name}
           </li>
         ))}
@@ -101,7 +115,7 @@ const Categories = () => {
       <div className={styles.containerContent}>
         <h2>
           {activeItem === null ? 'Вся випічка' : selectedSort}
-          {!!subcategory ? ` (${subcategory.name})` : null}
+          {!!subcategory ? ` (${subcategory})` : null}
         </h2>
       </div>
     </>

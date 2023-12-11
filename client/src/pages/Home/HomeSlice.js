@@ -46,22 +46,31 @@ const HomeSlice = createSlice({
     selectedCategory: {
       reducer(state, { payload }) {
         state.categoryId = payload;
+        state.page = 1;
       },
     },
     selectedSubcategory: {
       reducer(state, { payload }) {
         state.subcategoryId = payload;
+        state.page = 1;
       },
     },
     selectedLimit: {
       reducer(state, { payload }) {
         state.limit = payload;
+        state.page = 1;
       },
     },
     selectedSortBy: {
       reducer(state, { payload }) {
         state.orderBy = payload.orderBy;
         state.sortBy = payload.sortBy;
+        state.page = 1;
+      },
+    },
+    selectedPage: {
+      reducer(state, { payload }) {
+        state.page = payload;
       },
     },
   },
@@ -86,5 +95,6 @@ export const {
   selectedSubcategory,
   selectedLimit,
   selectedSortBy,
+  selectedPage,
 } = HomeSlice.actions;
 export default HomeSlice.reducer;

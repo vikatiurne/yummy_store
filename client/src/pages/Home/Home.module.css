@@ -13,6 +13,12 @@
   grid-template-columns: repeat(4, 1fr);
   justify-items: center;
 }
+
+.empty{
+  margin-bottom: 3rem;
+  text-align: center;
+  font-size: 1.2rem;
+}
 @media (max-width: 1440px) {
   .content {
     grid-template-columns: repeat(3, 1fr);

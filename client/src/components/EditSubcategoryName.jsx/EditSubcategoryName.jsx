@@ -50,7 +50,7 @@ const EditSubcategoryName = ({ id }) => {
       <div className={styles.errorMessage}>
         {errors?.subcategoryName && <p>{errors?.subcategoryName?.message}</p>}
       </div>
-      <button>
+      <button className={styles.check}>
         <FaCheck />
       </button>
       <MdCancelPresentation
@@ -59,19 +59,6 @@ const EditSubcategoryName = ({ id }) => {
       />
     </form>
   );
-
-  // const renderModal = (
-  //   <form onSubmit={(e) => e.preventDefault()}>
-  //     <input
-  //       className={styles.editName}
-  //       value={subcategoryName}
-  //       onChange={(e) => setSubcategoryName(e.target.value)}
-  //     />
-  //     <button onClick={chancheSubcategoryNameHandler}>
-  //       <FaCheck />
-  //     </button>
-  //   </form>
-  // );
   return render;
 };
 

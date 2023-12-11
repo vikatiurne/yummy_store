@@ -39,7 +39,7 @@ const EditCategoryName = ({ id }) => {
       <div className={styles.errorMessage}>
         {errors?.categoryName && <p>{errors?.categoryName?.message}</p>}
       </div>
-      <button>
+      <button className={styles.check}>
         <FaCheck />
       </button>
       <MdCancelPresentation

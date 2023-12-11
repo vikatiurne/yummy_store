@@ -11,9 +11,12 @@ import {
 } from '../../pages/Auth/AuthSlice';
 import Button from '../UI/Button/Button';
 import AuthModal from '../Modals/AuthModal';
+
 import googleBtn from '../../assets/btn_google_signin.png';
-import styles from './LoginForm.module.css';
+
 import { fetchGetBasket } from '../../pages/Basket/BasketSlice';
+
+import styles from './LoginForm.module.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');

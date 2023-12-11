@@ -44,6 +44,7 @@ class ProdactController {
     const queries = {
       offset,
       limit,
+      subQuery:false
     };
     if (orderBy) {
       queries.order = [[orderBy, sortBy]];
@@ -57,13 +58,19 @@ class ProdactController {
         ...queries,
       });
     }
+    if (!categoryId && subcategoryId) {
+      prodacts = await Prodact.findAndCountAll({
+        where: { subcategoryId },
+        ...queries,
+      });
+    }
     if (categoryId && subcategoryId) {
       prodacts = await Prodact.findAndCountAll({
         where: { categoryId, subcategoryId },
         ...queries,
       });
     }
-
+    
     return await res.json(prodacts);
   }
   async getOne(req, res) {

@@ -6,9 +6,8 @@ import UpdateServices from '../../services/UpdateService';
 const initialState = {
   status: 'idle',
   error: null,
-  // category: '',
-  // subcategory: '',
   prodact: [],
+  isDelProdact:false,
   isDelete: false,
   isUpdate: false,
   isAdd: false,
@@ -142,7 +141,6 @@ const AdminSlice = createSlice({
         state.isAdd = false;
       })
       .addCase(fetchCreateCategory.fulfilled, (state, { payload }) => {
-        console.log(payload)
         state.status = 'success';
         state.error = null;
         // state.category = payload;
@@ -180,11 +178,11 @@ const AdminSlice = createSlice({
       })
       .addCase(fetchDeleteProdact.pending, (state) => {
         state.status = 'loading';
-        state.isDelete = false;
+        state.isDelProdact = false;
       })
       .addCase(fetchDeleteProdact.fulfilled, (state) => {
         state.status = 'success';
-        state.isDelete = true;
+        state.isDelProdact = true;
       })
       .addCase(fetchDeleteProdact.rejected, (state, { payload }) => {
         state.status = 'error';

@@ -1,6 +1,8 @@
 import { where } from 'sequelize';
-import { Category } from '../models/models.js';
+import { Category, Prodact } from '../models/models.js';
 import { categoryService } from '../service/category-service.js';
+import path from 'path';
+import fs from 'fs';
 
 class CategoryController {
   async create(req, res) {
@@ -24,6 +26,17 @@ class CategoryController {
   async delete(req, res, next) {
     try {
       const { id } = req.params;
+      const prodact = await Prodact.findAll({ where: { categoryId: id } });
+      if (!!prodact) {
+        const images = [];
+        prodact.map((item) => images.push(item.img));
+
+        images.map((img) => {
+          const __dirname = path.dirname('..');
+          const pathFile = `${__dirname}/static/${img}`;
+          fs.unlinkSync(pathFile);
+        });
+      }
       const delCategory = await Category.destroy({ where: { id } });
       return res.json(delCategory);
     } catch (error) {

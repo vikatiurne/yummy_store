@@ -8,8 +8,9 @@ import GetServices from '../../services/GetServices';
 
 import { Modal, Select } from '../index';
 
-import styles from './Modals.module.css';
 import { fetchCreateProdact } from '../../pages/Admin/AdminSlice';
+
+import styles from './Modals.module.css';
 
 const CreateProdact = ({ active, setActive }) => {
   const [category, setCategory] = useState('Оберіть категорію');
@@ -27,7 +28,6 @@ const CreateProdact = ({ active, setActive }) => {
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.home.category);
-
   const subcategories = useSelector((state) => state.home.subcategory);
 
   const selectHandler = async (e) => {
@@ -50,9 +50,10 @@ const CreateProdact = ({ active, setActive }) => {
   };
 
   const onSubmit = (data) => {
-    const selectedSubcategory = subcategories.filter(
-      (item) => item.name === subcategory
-    );
+    const selectedSubcategory = subcategories
+      .filter((item) => item.categoryId === categoryId)
+      .filter((item) => item.name === subcategory);
+
     let sizes = `${data.size1},${data.size2},${data.size3}`;
 
     const formData = new FormData();
@@ -129,9 +130,8 @@ const CreateProdact = ({ active, setActive }) => {
 
               {errors?.price && <p>{errors?.price?.message}</p>}
             </div>
-
           </div>
-          
+
           <div className={styles.sizes}>
             <div className={styles.errorMessage}>
               <input
@@ -141,12 +141,13 @@ const CreateProdact = ({ active, setActive }) => {
                   required: true,
                   pattern: {
                     value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
-                    message:
-                      'Поле має містити цифри та букви',
+                    message: 'Поле має містити цифри та букви',
                   },
                 })}
               />
-              {errors?.size1 && <p className={styles.errSize}>{errors?.size1?.message}</p>}
+              {errors?.size1 && (
+                <p className={styles.errSize}>{errors?.size1?.message}</p>
+              )}
             </div>
 
             <div className={styles.errorMessage}>
@@ -157,12 +158,13 @@ const CreateProdact = ({ active, setActive }) => {
                   required: true,
                   pattern: {
                     value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
-                    message:
-                      'Поле має містити цифри та букви',
+                    message: 'Поле має містити цифри та букви',
                   },
                 })}
               />
-              {errors?.size2 && <p className={styles.errSize}>{errors?.size2?.message}</p>}
+              {errors?.size2 && (
+                <p className={styles.errSize}>{errors?.size2?.message}</p>
+              )}
             </div>
 
             <div className={styles.errorMessage}>
@@ -173,12 +175,13 @@ const CreateProdact = ({ active, setActive }) => {
                   required: true,
                   pattern: {
                     value: /(\d+[a-zA-ZА-Яа-яЇїІіЄєҐґ']+$)/,
-                    message:
-                      'Поле має містити цифри та букви',
+                    message: 'Поле має містити цифри та букви',
                   },
                 })}
               />
-              {errors?.size3 && <p className={styles.errSize}>{errors?.size3?.message}</p>}
+              {errors?.size3 && (
+                <p className={styles.errSize}>{errors?.size3?.message}</p>
+              )}
             </div>
           </div>
           <label className={styles.fileUpload}>

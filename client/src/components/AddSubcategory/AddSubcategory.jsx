@@ -45,7 +45,7 @@ const AddSubcategory = ({ categoryId }) => {
       <div className={styles.errorMessage}>
         {errors?.subcategoryName && <p>{errors?.subcategoryName?.message}</p>}
       </div>
-      <button>
+      <button className={styles.check}>
         <FaCheck />
       </button>
       <MdCancelPresentation
