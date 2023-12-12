@@ -38,7 +38,7 @@ const Header = () => {
             item.basket_prodact.qty * (item.price / parseInt(item.sizes[0]))
         )
         .reduce((acc, val) => acc + val, 0);
-      dispatch(getTotalPrice(total));
+      dispatch(getTotalPrice(Math.round(total)));
     }
   }, [orders, dispatch]);
 

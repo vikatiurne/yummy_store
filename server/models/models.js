@@ -59,6 +59,24 @@ const Rating = sequelize.define('rating', {
   rate: { type: DataTypes.INTEGER, allowNull: false },
 });
 
+const Order = sequelize.define('order', {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+  email: { type: DataTypes.STRING, allowNull: false },
+  phone: { type: DataTypes.STRING, allowNull: false },
+  address: { type: DataTypes.STRING, allowNull: false },
+  amount: { type: DataTypes.INTEGER, allowNull: false },
+  status: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
+  comment: { type: DataTypes.STRING },
+});
+
+const OrderItem = sequelize.define('order_item', {
+  id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+  name: {type: DataTypes.STRING, allowNull: false},
+  price: {type: DataTypes.INTEGER, allowNull: false},
+  qty: {type: DataTypes.INTEGER, allowNull: false},
+})
+
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
@@ -68,14 +86,20 @@ Token.belongsTo(User);
 User.hasMany(Rating);
 Rating.belongsTo(User);
 
+Order.hasMany(OrderItem, {as: 'items', onDelete: 'CASCADE'})
+OrderItem.belongsTo(Order)
+
+User.hasMany(Order, {as: 'orders', onDelete: 'SET NULL'})
+Order.belongsTo(User)
+
 Basket.belongsToMany(Prodact, { through: BasketProdact, onDelete: 'CASCADE' });
 Prodact.belongsToMany(Basket, { through: BasketProdact, onDelete: 'CASCADE' });
 
 Basket.hasMany(BasketProdact);
 BasketProdact.belongsTo(Basket);
 
-BasketProdact.hasOne(Prodact);
-Prodact.belongsTo(BasketProdact);
+// BasketProdact.hasOne(Prodact);
+// Prodact.belongsTo(BasketProdact);
 
 Prodact.hasMany(Rating, { onDelete: 'CASCADE' });
 Rating.belongsTo(Prodact);
@@ -95,6 +119,8 @@ Subcategory.belongsTo(Category);
 export {
   User,
   Basket,
+  Order,
+  OrderItem,
   Rating,
   BasketProdact,
   Prodact,

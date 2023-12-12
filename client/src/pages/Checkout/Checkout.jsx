@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CheckoutForm } from '../../components';
+import { CheckoutForm, LoginForm } from '../../components';
 import styles from './Checkout.module.css';
 import { useSelector } from 'react-redux';
 
@@ -32,7 +32,8 @@ const Checkout = () => {
               <p>Увійти в акаунт</p>
             </div>
           </div>
-          <CheckoutForm />
+            {activeLogin && <LoginForm/>}
+          {activeEnterData &&<CheckoutForm />}
         </main>
         <aside></aside>
       </div>

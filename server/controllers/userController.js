@@ -1,7 +1,7 @@
 import { validationResult } from 'express-validator';
 
 import { ApiError } from '../error/ApiError.js';
-import { User, Basket } from '../models/models.js';
+import { User } from '../models/models.js';
 import { userService } from '../service/user-service.js';
 import { tokenService } from '../service/token-service.js';
 import { UserDto } from '../dtos/user-dto.js';

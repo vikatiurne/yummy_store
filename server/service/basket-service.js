@@ -7,7 +7,7 @@ class BasketService {
         { model: Prodact, attributes: ['id', 'name', 'price', 'img', 'sizes'] },
       ],
       attributes: ['id'],
-      where: { userId },
+      where: { id: basketId },
     });
     if (!basket) {
       basket = await Basket.create({ userId });

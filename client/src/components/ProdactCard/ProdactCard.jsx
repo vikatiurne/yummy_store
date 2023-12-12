@@ -15,6 +15,7 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
   const [qtyProdact, setQtyProdact] = useState(parseInt(sizes[0]));
 
   const user = useSelector((state) => state.auth.user);
+  console.log(user.role)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,10 +62,12 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
       </ul>
       <div className={styles.priceInfo}>
         <p>від {price}₴</p>
-        <button onClick={addHandler}>
-          <FaPlus className={styles.iconPlus} /> Додати{' '}
-          <span>{qtyProdact}</span>
-        </button>
+        {user.role !== 'ADMIN' && (
+          <button onClick={addHandler}>
+            <FaPlus className={styles.iconPlus} /> Додати{' '}
+            <span>{qtyProdact}</span>
+          </button>
+        )}
       </div>
       <div className={styles.footerCard}>
         <div className={styles.moreInfo} onClick={redirectHandler}>

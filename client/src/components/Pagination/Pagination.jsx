@@ -14,7 +14,6 @@ const Pagination = () => {
   const count = useSelector((state) => state.home.count);
   const limit = useSelector((state) => state.home.limit);
   const page = useSelector((state) => state.home.page);
-  console.log(page)
 
   const pagesCount = Math.ceil(count / limit);
 

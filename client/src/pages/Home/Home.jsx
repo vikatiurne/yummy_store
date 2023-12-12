@@ -26,9 +26,6 @@ function Home() {
   const ratingById = useSelector((state) => state.prodact.rating);
   const isDelProdact = useSelector((state) => state.admin.isDelProdact);
   const prodacts = useSelector((state) => state.home.prodacts);
-  console.log("prodacts:",prodacts)
-  console.log("categoryId:",categoryId)
-  console.log("subcategoryId:",subcategoryId)
 
   const dispatch = useDispatch();
 
@@ -39,7 +36,6 @@ function Home() {
 
   useEffect(() => {
     const currentCategory = categories.filter((item) => item.id === categoryId);
-  console.log("currentCategory:",currentCategory)
 
     if (!currentCategory.length) dispatch(selectedCategory(null));
   }, [dispatch, categories, categoryId]);

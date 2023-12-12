@@ -16,13 +16,13 @@ class BasketController {
       } else {
         const { userId } = req.query;
         basket = await basketService.create(userId);
+        res.cookie('basketId', basket.id, {
+          maxAge,
+          signed,
+          secure: true,
+          sameSite: 'none',
+        });
       }
-      res.cookie('basketId', basket.id, {
-        maxAge,
-        signed,
-        secure: true,
-        sameSite: 'none',
-      });
       res.json(basket);
     } catch (error) {
       next(error);
@@ -31,24 +31,24 @@ class BasketController {
 
   async append(req, res, next) {
     try {
-      let basketId;
+      let basketId, basket;
       if (!req.signedCookies.basketId) {
         const { userId } = req.body.params;
         const created = await basketService.create(userId);
         basketId = created.id;
+        const { prodactId } = req.params;
+        const { qty } = req.body.params;
+        basket = await basketService.append(basketId, prodactId, qty);
+        res.cookie('basketId', basket.id, {
+          maxAge,
+          signed,
+          secure: true,
+          sameSite: 'none',
+        });
       } else {
         basketId = parseInt(req.signedCookies.basketId);
       }
 
-      const { prodactId } = req.params;
-      const { qty } = req.body.params;
-      const basket = await basketService.append(basketId, prodactId, qty);
-      res.cookie('basketId', basket.id, {
-        maxAge,
-        signed,
-        secure: true,
-        sameSite: 'none',
-      });
       res.json(basket);
     } catch (error) {
       next(error);
@@ -95,22 +95,23 @@ class BasketController {
 
   async remove(req, res, next) {
     try {
-      let basketId;
+      let basketId, basket;
       if (!req.signedCookies.basketId) {
         const { userId } = req.query;
         const created = await basketService.create(userId);
         basketId = created.id;
+        const { prodactId } = req.params;
+        basket = await basketService.remove(basketId, prodactId);
+        res.cookie('basketId', basket.id, {
+          maxAge,
+          signed,
+          secure: true,
+          sameSite: 'none',
+        });
       } else {
         basketId = parseInt(req.signedCookies.basketId);
       }
-      const { prodactId } = req.params;
-      const basket = await basketService.remove(basketId, prodactId);
-      res.cookie('basketId', basket.id, {
-        maxAge,
-        signed,
-        secure: true,
-        sameSite: 'none',
-      });
+
       res.json(basket);
     } catch (error) {
       next(error);
@@ -119,21 +120,22 @@ class BasketController {
 
   async clear(req, res, next) {
     try {
-      let basketId;
+      let basketId, basket;
       if (!req.signedCookies.basketId) {
         const { userId } = req.query;
         const created = await basketService.create(userId);
         basketId = created.id;
+        basket = await basketService.clear(basketId);
+        res.cookie('basketId', basket.id, {
+          maxAge,
+          signed,
+          secure: true,
+          sameSite: 'none',
+        });
       } else {
         basketId = parseInt(req.signedCookies.basketId);
       }
-      const basket = await basketService.clear(basketId);
-      res.cookie('basketId', basket.id, {
-        maxAge,
-        signed,
-        secure: true,
-        sameSite: 'none',
-      });
+
       res.json(basket);
     } catch (error) {
       next(error);

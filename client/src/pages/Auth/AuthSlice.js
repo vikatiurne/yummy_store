@@ -183,9 +183,9 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchGetGoogleUser.fulfilled, (state, { payload }) => {
-        state.isAuth = true;
         state.user = payload.data.user;
         localStorage.setItem('token', payload.data.accessToken)
+        state.isAuth = true;
       })
       .addCase(fetchGetGoogleUser.rejected, (state, { payload }) => {
         state.status = 'error';
