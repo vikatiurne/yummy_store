@@ -7,7 +7,10 @@ const initialState = {
   status: 'idle',
   error: null,
   msg: null,
-  redirectUrl:'',
+  redirectUrl: '',
+  isGoogleAuth: false,
+  pathname: '',
+  prevLocation: '/',
 };
 
 export const fetchLogin = createAsyncThunk(
@@ -74,6 +77,11 @@ export const fetchLogout = createAsyncThunk('auth/fetchLogout', async () => {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    getLocation(state, { payload }) {
+      state.pathname = payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchLogin.pending, (state) => {
@@ -135,11 +143,12 @@ const authSlice = createSlice({
       })
       .addCase(fetchLogout.fulfilled, (state) => {
         localStorage.removeItem('token');
+        localStorage.removeItem('location');
         state.status = 'success';
         state.error = null;
         state.isAuth = false;
+        state.isGoogleAuth = false;
         state.user = {};
-        
       })
       .addCase(fetchLogout.rejected, (state) => {
         state.status = 'error';
@@ -152,6 +161,7 @@ const authSlice = createSlice({
         state.user = payload.data;
         state.error = payload.message;
         state.isAuth = true;
+        state.isGoogleAuth = true;
       })
       .addCase(fetchAutoLogin.rejected, (state) => {
         state.status = 'error';
@@ -184,17 +194,24 @@ const authSlice = createSlice({
       })
       .addCase(fetchGetGoogleUser.fulfilled, (state, { payload }) => {
         state.user = payload.data.user;
-        localStorage.setItem('token', payload.data.accessToken)
-        state.isAuth = true;
+        localStorage.setItem('token', payload.data.accessToken);
+        state.isGoogleAuth = true;
+        state.prevLocation = localStorage.getItem('location');
+        localStorage.removeItem('location');
       })
       .addCase(fetchGetGoogleUser.rejected, (state, { payload }) => {
         state.status = 'error';
-        // state.error = payload.message
+        state.error = payload.message
+      })
+      .addCase(fetchGetRedirectUrl.pending, (state) => {
+        localStorage.removeItem('location');
       })
       .addCase(fetchGetRedirectUrl.fulfilled, (state, { payload }) => {
-        state.redirectUrl = payload.data
-      })
+        state.redirectUrl = payload.data;
+        localStorage.setItem('location', state.pathname);
+      });
   },
 });
 
+export const { getLocation } = authSlice.actions;
 export default authSlice.reducer;

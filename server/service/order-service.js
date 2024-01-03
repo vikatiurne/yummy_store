@@ -40,12 +40,18 @@ class OrderService {
       email,
       phone,
       address,
-      comment = null,
+      comment,
       items,
       userId = null,
     } = data;
-    const amount = items.reduce((acc, item) => acc + item.price * item.qty, 0);
-    const order = await OrderItem.create({
+    const amount = items
+      .map(
+        (item) =>
+          item.basket_prodact.qty * (item.price / parseInt(item.sizes[0]))
+      )
+      .reduce((acc, val) => acc + val, 0);
+
+    const order = await Order.create({
       name,
       email,
       phone,
@@ -54,15 +60,17 @@ class OrderService {
       amount,
       userId,
     });
+
     for (let item of items) {
       await OrderItem.create({
         name: item.name,
-        price: item.price,
-        qty: item.qty,
+        price: item.price / parseInt(item.sizes[0]),
+        qty:
+          item.basket_prodact.qty + item.sizes[0].replace(/[^a-zа-яё]/gi, ''),
         orderId: order.id,
       });
     }
-    const newOrder = Order.findByPk(order.id, {
+    const newOrder = await Order.findByPk(order.id, {
       include: [
         { model: OrderItem, as: 'items', attributes: ['name', 'price', 'qty'] },
       ],

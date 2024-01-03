@@ -20,7 +20,7 @@ export default class BasketServices {
   static async remove(prodactId) {
     return $api.put(`/api/basket/prodact/${prodactId}/remove`);
   }
-  static async clear(basketId) {
-    return $api.put('/api/basket/clear', { params: { basketId } });
+  static async clear( userId) {
+    return $api.put('/api/basket/clear', { params: {userId } });
   }
 }

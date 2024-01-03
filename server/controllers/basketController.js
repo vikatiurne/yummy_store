@@ -1,3 +1,4 @@
+import { ApiError } from '../error/ApiError.js';
 import { basketService } from '../service/basket-service.js';
 
 const maxAge = 60 * 60 * 1000 * 24 * 365;
@@ -5,16 +6,15 @@ const signed = true;
 
 class BasketController {
   async getOne(req, res, next) {
+    const { userId } = req.query;
     try {
       let basket;
-      const { userId } = req.query;
       if (req.signedCookies.basketId) {
         basket = await basketService.getOne(
           parseInt(req.signedCookies.basketId),
           userId
         );
       } else {
-        const { userId } = req.query;
         basket = await basketService.create(userId);
         res.cookie('basketId', basket.id, {
           maxAge,
@@ -23,9 +23,9 @@ class BasketController {
           sameSite: 'none',
         });
       }
-      res.json(basket);
+      return res.json(basket);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -34,11 +34,8 @@ class BasketController {
       let basketId, basket;
       if (!req.signedCookies.basketId) {
         const { userId } = req.body.params;
-        const created = await basketService.create(userId);
-        basketId = created.id;
-        const { prodactId } = req.params;
-        const { qty } = req.body.params;
-        basket = await basketService.append(basketId, prodactId, qty);
+        basket = await basketService.create(userId);
+        basketId = basket.id;
         res.cookie('basketId', basket.id, {
           maxAge,
           signed,
@@ -48,10 +45,12 @@ class BasketController {
       } else {
         basketId = parseInt(req.signedCookies.basketId);
       }
-
-      res.json(basket);
+      const { prodactId } = req.params;
+      const { qty } = req.body.params;
+      basket = await basketService.append(basketId, prodactId, qty);
+      return res.json(basket);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -66,9 +65,9 @@ class BasketController {
         secure: true,
         sameSite: 'none',
       });
-      res.json(basket);
+      return res.json(basket);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -87,9 +86,9 @@ class BasketController {
         secure: true,
         sameSite: 'none',
       });
-      res.json(basket);
+      return res.json(basket);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -98,10 +97,8 @@ class BasketController {
       let basketId, basket;
       if (!req.signedCookies.basketId) {
         const { userId } = req.query;
-        const created = await basketService.create(userId);
-        basketId = created.id;
-        const { prodactId } = req.params;
-        basket = await basketService.remove(basketId, prodactId);
+        basket = await basketService.create(userId);
+        basketId = basket.id;
         res.cookie('basketId', basket.id, {
           maxAge,
           signed,
@@ -111,10 +108,12 @@ class BasketController {
       } else {
         basketId = parseInt(req.signedCookies.basketId);
       }
+      const { prodactId } = req.params;
+      basket = await basketService.remove(basketId, prodactId);
 
-      res.json(basket);
+      return res.json(basket);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -123,10 +122,9 @@ class BasketController {
       let basketId, basket;
       if (!req.signedCookies.basketId) {
         const { userId } = req.query;
-        const created = await basketService.create(userId);
-        basketId = created.id;
-        basket = await basketService.clear(basketId);
-        res.cookie('basketId', basket.id, {
+        basket = await basketService.create(userId);
+        basketId = basket.id;
+        res.cookie('basketId', basketId, {
           maxAge,
           signed,
           secure: true,
@@ -135,10 +133,11 @@ class BasketController {
       } else {
         basketId = parseInt(req.signedCookies.basketId);
       }
+      basket = await basketService.clear(basketId);
 
-      res.json(basket);
+      return res.json(basket);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 }

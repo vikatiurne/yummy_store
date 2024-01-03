@@ -1,0 +1,73 @@
+.formWrapper {
+  padding: 1rem;
+  margin: 0 auto;
+  max-width: 30rem;
+  box-shadow: 3px 5px 15px 0px rgba(110, 30, 147, 0.2);
+}
+.formFields {
+  display: flex;
+  flex-direction: column;
+}
+.formFields input {
+  padding: 0.7rem;
+  margin-top: 1rem;
+  outline: none;
+  border: none;
+  background-color: rgba(110, 30, 147, 0.2);
+  border-radius: 5px;
+  font-size: 1.3rem;
+}
+.deliveryBlock {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  border-radius: 5px;
+  background-color: rgba(110, 30, 147, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+.radio input {
+  margin-right: 0.5rem;
+}
+.success {
+  display: block;
+  margin: 1rem auto 0;
+  background-color: #6e1e93;
+  text-transform: uppercase;
+  color: white;
+}
+.errorMessage {
+  bottom: -0.8rem;
+  font-size: 0.8rem;
+  color: red;
+  text-transform: lowercase;
+}
+input.redBorder {
+  border: 1px solid red;
+}
+div.redBorder {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  border-radius: 5px;
+  border: 1px solid red;
+  background-color: rgba(110, 30, 147, 0.2);
+  display: flex;
+  flex-direction: column;
+}
+div.redBorder p, 
+.deliveryBlock p{
+    font-size: 1.3rem;
+    color: grey
+}
+.comment {
+  margin: 0.5rem 0 0.5rem;
+  padding: 0.3rem;
+  background-color: rgba(110, 30, 147, 0.2);
+  max-width: 100%;
+  width: 100%;
+  height: 20vh;
+  font-size: 1.3rem;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  resize: none;
+}

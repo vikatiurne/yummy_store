@@ -5,6 +5,7 @@ import {
   homeReducer,
   prodactReducer,
   basketReducer,
+  checkoutReducer,
 } from '../pages';
 
 export const store = configureStore({
@@ -14,6 +15,7 @@ export const store = configureStore({
     home: homeReducer,
     prodact: prodactReducer,
     basket: basketReducer,
+    order: checkoutReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

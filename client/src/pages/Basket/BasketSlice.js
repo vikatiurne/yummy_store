@@ -7,7 +7,6 @@ const initialState = {
   status: 'idle',
   err: null,
   totalPrice: 0,
-  numberOrder: null,
 };
 
 export const fetchGetBasket = createAsyncThunk(
@@ -68,6 +67,17 @@ export const fetchRemoveProdact = createAsyncThunk(
   }
 );
 
+export const fetchClearBasket = createAsyncThunk(
+  'basket/fetchClearBasket',
+  async ({ userId }, { rejectWithValue }) => {
+    try {
+      return await BasketServices.clear( userId);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const BasketSlice = createSlice({
   name: 'basket',
   initialState,
@@ -84,7 +94,6 @@ const BasketSlice = createSlice({
       .addCase(fetchGetBasket.pending, (state) => {
         state.status = 'loading';
         state.err = null;
-        state.numberOrder = null;
       })
       .addCase(fetchGetBasket.fulfilled, (state, { payload }) => {
         state.status = 'success';
@@ -92,7 +101,6 @@ const BasketSlice = createSlice({
           payload.prodacts.sort((a, b) => (a.id > b.id ? 1 : -1));
           state.order = payload.prodacts;
         }
-        state.numberOrder = payload.id;
       })
       .addCase(fetchGetBasket.rejected, (state, { payload }) => {
         state.status = 'error';
@@ -145,10 +153,23 @@ const BasketSlice = createSlice({
       })
       .addCase(fetchRemoveProdact.fulfilled, (state, { payload }) => {
         state.status = 'success';
-        payload.sort((a, b) => (a.id > b.id ? 1 : -1));
+        // payload.sort((a, b) => (a.id > b.id ? 1 : -1));
         state.order = payload;
       })
       .addCase(fetchRemoveProdact.rejected, (state, { payload }) => {
+        state.status = 'error';
+        state.err = payload.data.message;
+      })
+      .addCase(fetchClearBasket.pending, (state) => {
+        state.status = 'loading';
+        state.err = null;
+      })
+      .addCase(fetchClearBasket.fulfilled, (state, { payload }) => {
+        state.status = 'success';
+        // payload.sort((a, b) => (a.id > b.id ? 1 : -1));
+        state.order = [];
+      })
+      .addCase(fetchClearBasket.rejected, (state, { payload }) => {
         state.status = 'error';
         state.err = payload.data.message;
       });

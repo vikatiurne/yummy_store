@@ -1,5 +1,5 @@
 import sequelize from '../bd.js';
-import { DataTypes, STRING } from 'sequelize';
+import { DataTypes } from 'sequelize';
 
 const User = sequelize.define('user', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -65,17 +65,23 @@ const Order = sequelize.define('order', {
   email: { type: DataTypes.STRING, allowNull: false },
   phone: { type: DataTypes.STRING, allowNull: false },
   address: { type: DataTypes.STRING, allowNull: false },
-  amount: { type: DataTypes.INTEGER, allowNull: false },
+  amount: {
+    type: DataTypes.NUMERIC({ precision: 10, decimals: 1, zerofill: false }),
+    allowNull: false,
+  },
   status: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   comment: { type: DataTypes.STRING },
 });
 
 const OrderItem = sequelize.define('order_item', {
-  id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  name: {type: DataTypes.STRING, allowNull: false},
-  price: {type: DataTypes.INTEGER, allowNull: false},
-  qty: {type: DataTypes.INTEGER, allowNull: false},
-})
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+  price: {
+    type: DataTypes.NUMERIC({ precision: 5, decimals: 1, zerofill: false }),
+    allowNull: false,
+  },
+  qty: { type: DataTypes.STRING, allowNull: false },
+});
 
 User.hasOne(Basket);
 Basket.belongsTo(User);
@@ -86,11 +92,11 @@ Token.belongsTo(User);
 User.hasMany(Rating);
 Rating.belongsTo(User);
 
-Order.hasMany(OrderItem, {as: 'items', onDelete: 'CASCADE'})
-OrderItem.belongsTo(Order)
+Order.hasMany(OrderItem, { as: 'items', onDelete: 'CASCADE' });
+OrderItem.belongsTo(Order);
 
-User.hasMany(Order, {as: 'orders', onDelete: 'SET NULL'})
-Order.belongsTo(User)
+User.hasMany(Order, { as: 'orders', onDelete: 'SET NULL' });
+Order.belongsTo(User);
 
 Basket.belongsToMany(Prodact, { through: BasketProdact, onDelete: 'CASCADE' });
 Prodact.belongsToMany(Basket, { through: BasketProdact, onDelete: 'CASCADE' });

@@ -1,4 +1,4 @@
-import { where } from 'sequelize';
+import { ApiError } from '../error/ApiError.js';
 import { Category, Prodact } from '../models/models.js';
 import { categoryService } from '../service/category-service.js';
 import path from 'path';
@@ -20,7 +20,7 @@ class CategoryController {
       const category = await categoryService.getCategory(id);
       return res.json(category);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async delete(req, res, next) {
@@ -40,7 +40,7 @@ class CategoryController {
       const delCategory = await Category.destroy({ where: { id } });
       return res.json(delCategory);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async update(req, res, next) {
@@ -53,7 +53,7 @@ class CategoryController {
       );
       return res.json(updatedCategory);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 }

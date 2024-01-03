@@ -13,6 +13,7 @@ import {
 import { fetchGetGoogleUser } from '../Auth/AuthSlice';
 
 import styles from './Home.module.css';
+import { Navigate } from 'react-router-dom';
 
 function Home() {
   const categoryId = useSelector((state) => state.home.categoryId);
@@ -26,6 +27,9 @@ function Home() {
   const ratingById = useSelector((state) => state.prodact.rating);
   const isDelProdact = useSelector((state) => state.admin.isDelProdact);
   const prodacts = useSelector((state) => state.home.prodacts);
+  const isAuth = useSelector((state) => state.auth.isAuth);
+  const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
+  const prevLocation = useSelector((state) => state.auth.prevLocation);
 
   const dispatch = useDispatch();
 
@@ -71,11 +75,12 @@ function Home() {
   ]);
 
   useEffect(() => {
-    dispatch(fetchGetGoogleUser());
-  }, [dispatch]);
+    if (!isAuth || !isGoogleAuth) dispatch(fetchGetGoogleUser());
+  }, [dispatch, isAuth, isGoogleAuth]);
 
   return (
     <>
+      {prevLocation === '/checkout' && <Navigate to={prevLocation} />}
       <div className={styles.sortBy}>
         <Categories />
       </div>
@@ -87,7 +92,7 @@ function Home() {
         </>
       ) : (
         <p className={styles.empty}>Немає товарів для відображення</p>
-        )}
+      )}
     </>
   );
 }

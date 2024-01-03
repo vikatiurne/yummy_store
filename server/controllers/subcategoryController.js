@@ -2,6 +2,7 @@ import { Prodact, Subcategory } from '../models/models.js';
 import { subcategoryService } from '../service/subcategory-service.js';
 import path from 'path';
 import fs from 'fs';
+import { ApiError } from '../error/ApiError.js';
 
 class SubcategoryController {
   async create(req, res) {
@@ -19,7 +20,7 @@ class SubcategoryController {
       const subcaregory = await subcategoryService.getSubcategory(id);
       return res.json(subcaregory);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async delete(req, res, next) {
@@ -39,7 +40,7 @@ class SubcategoryController {
       const delSubcategory = await Subcategory.destroy({ where: { id } });
       return res.json(delSubcategory);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async update(req, res, next) {
@@ -52,7 +53,7 @@ class SubcategoryController {
       );
       return res.json(updatedSubcategory);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 }

@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RxEyeClosed, RxEyeOpen } from 'react-icons/rx';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 
 import {
   fetchForgotPassword,
   fetchGetRedirectUrl,
   fetchLogin,
   fetchRegistration,
+  getLocation,
 } from '../../pages/Auth/AuthSlice';
 import Button from '../UI/Button/Button';
 import AuthModal from '../Modals/AuthModal';
 
 import googleBtn from '../../assets/btn_google_signin.png';
-
-import { fetchGetBasket } from '../../pages/Basket/BasketSlice';
 
 import styles from './LoginForm.module.css';
 
@@ -32,14 +31,19 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
+  const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const err = useSelector((state) => state.auth.error);
   const url = useSelector((state) => state.auth.redirectUrl);
-  const userId = useSelector((state) => state.auth.user.id);
+
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    dispatch(fetchGetRedirectUrl());
-  }, [dispatch]);
+    if (!isGoogleAuth) {
+      dispatch(fetchGetRedirectUrl());
+      dispatch(getLocation(pathname));
+    }
+  }, [dispatch, isGoogleAuth, pathname]);
 
   useEffect(() => {
     if (!!err) setModalActive(true);
@@ -51,7 +55,6 @@ const LoginForm = () => {
 
   const loginHandler = () => {
     dispatch(fetchLogin({ email, password }));
-    if (!!userId) dispatch(fetchGetBasket({ userId }));
   };
 
   const registrationHandler = () =>
@@ -193,10 +196,12 @@ const LoginForm = () => {
       )}
     </>
   );
+
   return (
     <>
       <AuthModal active={modalActive} setActive={clickModalHandler} />
-      {!isAuth ? render : <Navigate to="/" />}
+
+      {!isAuth || !isGoogleAuth ? render : <Navigate to="/" />}
     </>
   );
 };

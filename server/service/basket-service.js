@@ -87,7 +87,7 @@ class BasketService {
     return basket;
   }
 
-  async clear(basketId, userId) {
+  async clear(basketId, userId = null) {
     let basket = await Basket.findByPk(basketId, {
       include: [{ model: Prodact, as: 'prodacts' }],
     });
@@ -100,10 +100,20 @@ class BasketService {
     return basket;
   }
 
-  async delete() {
-    let basket = await Basket.findOne({
+  // async delete() {
+  //   let basket = await Basket.findOne({
+  //     include: [{ model: Prodact, as: 'prodacts' }],
+  //     where: { userId: null },
+  //   });
+  //   if (!basket) {
+  //     throw new Error('Корзина не знайдена у БД');
+  //   }
+  //   await basket.destroy();
+  //   return basket;
+  // }
+  async delete(basketId) {
+    let basket = await Basket.findByPk(basketId, {
       include: [{ model: Prodact, as: 'prodacts' }],
-      where: { userId: null },
     });
     if (!basket) {
       throw new Error('Корзина не знайдена у БД');
@@ -111,16 +121,6 @@ class BasketService {
     await basket.destroy();
     return basket;
   }
-  //   async delete(basketId){
-  //     let basket = await Basket.findByPk(basketId, {
-  //         include: [{model: Prodact, as: 'prodacts'}]
-  //     })
-  //     if(!basket){
-  //         throw new Error('Корзина не знайдена у БД')
-  //     }
-  //     await basket.destroy()
-  //     return basket
-  //   }
 }
 
 export const basketService = new BasketService();

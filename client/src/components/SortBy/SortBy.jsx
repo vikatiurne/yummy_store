@@ -3,9 +3,10 @@ import { useDispatch } from 'react-redux';
 import { BsTriangleFill } from 'react-icons/bs';
 import { v4 as uuidv4 } from 'uuid';
 
+import { selectedSortBy } from '../../pages/Home/HomeSlice';
+
 import styles from './SortBy.module.css';
 
-import { selectedSortBy } from '../../pages/Home/HomeSlice';
 
 const sortList = ['популярністю', 'ціною', 'алфавітом'];
 

@@ -1,3 +1,4 @@
+import { ApiError } from '../error/ApiError.js';
 import {  Rating } from '../models/models.js';
 import { ratingService } from '../service/rating-service.js';
 
@@ -20,7 +21,7 @@ class RatingController {
       const data = await ratingService.getRating(prodactId)
       return res.json(data);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 }

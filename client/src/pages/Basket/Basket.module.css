@@ -89,19 +89,32 @@
 }
 .checkout {
   padding-top: 3rem;
-  text-align: end;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.checkout button {
+.toOrder,
+.clearBasket {
   padding: 0.4rem;
   text-transform: uppercase;
   font-weight: bold;
   font-size: 1.1rem;
+}
+.clearBasket {
+  background-color: #bdbbbb;
+  color: #978f8f;
+}
+.toOrder {
   color: white;
   background-color: #6d1e93;
 }
-.checkout button:active {
+.toOrder:hover {
   color: black;
   background-color: #e5a6fb;
+}
+.clearBasket:hover {
+  color: white;
+  background-color: rgb(255, 64, 64)
 }
 
 .qtyField {

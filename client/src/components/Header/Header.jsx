@@ -9,49 +9,43 @@ import styles from './Header.module.css';
 import Button from '../UI/Button/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogout } from '../../pages/Auth/AuthSlice';
-import {
-  fetchGetBasket,
-  getTotalPrice,
-  resetBasket,
-} from '../../pages/Basket/BasketSlice';
+import { getTotalPrice } from '../../pages/Basket/BasketSlice';
 
 const Header = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
+  const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
   const user = useSelector((state) => state.auth.user);
   const price = useSelector((state) => state.basket.totalPrice);
   const orders = useSelector((state) => state.basket.order);
-  const isDel = useSelector(state=>state.admin.isDelete)
-  
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!!user.id || isDel) dispatch(fetchGetBasket({ userId: user.id }));
-  }, [dispatch, user, isDel]);
-
-  useEffect(() => {
-    if (orders) {
-      const total = orders
-        .map(
-          (item) =>
-            item.basket_prodact.qty * (item.price / parseInt(item.sizes[0]))
-        )
-        .reduce((acc, val) => acc + val, 0);
-      dispatch(getTotalPrice(Math.round(total)));
+    if (!!orders.length) {
+      const total = Math.round(
+        orders
+          .map(
+            (item) =>
+              item.basket_prodact.qty * (item.price / parseInt(item.sizes[0]))
+          )
+          .reduce((acc, val) => acc + val, 0)
+      );
+      dispatch(getTotalPrice(total));
+    } else {
+      dispatch(getTotalPrice(0));
     }
   }, [orders, dispatch]);
 
   const logoutHandler = () => {
     dispatch(fetchLogout());
-    dispatch(resetBasket());
-    navigate('/');
   };
 
   return (
     <div className={styles.logoWrapper}>
       <Button className={styles.basket}>
-        {!isAuth ? (
+        {!isAuth && !isGoogleAuth ? (
           <>
             <Link to="auth">
               <p>Вхід</p>
@@ -64,7 +58,7 @@ const Header = () => {
             <span />
           </>
         )}
-        {!isAuth ? (
+        {!isAuth && !isGoogleAuth ? (
           <IoPerson className={styles.basketIcon} onClick={() => {}} />
         ) : (
           <>
@@ -77,7 +71,7 @@ const Header = () => {
         )}
       </Button>
 
-      <Link to="..">
+      <Link to="/">
         <div className={styles.logo}>
           <img src={logo} alt="logo" />
           <div className={styles.logoName}>

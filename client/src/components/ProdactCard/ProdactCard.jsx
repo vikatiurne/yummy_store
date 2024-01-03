@@ -15,7 +15,6 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
   const [qtyProdact, setQtyProdact] = useState(parseInt(sizes[0]));
 
   const user = useSelector((state) => state.auth.user);
-  console.log(user.role)
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -46,7 +45,6 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
   };
 
   const deleteHandler = () => {
-    console.log('id:', id);
     dispatch(fetchDeleteProdact(id));
   };
 

@@ -4,19 +4,6 @@ import { basketService } from '../service/basket-service.js';
 import { orderService } from '../service/order-service.js';
 
 class OrderController {
-    adminCreate = async (req, res, next) => {
-        await this.create(req, res, next, 'ADMIN')
-    }
-
-    userCreate = async (req, res, next) => {
-        await this.create(req, res, next, 'user')
-    }
-
-    guestCreate = async (req, res, next) => {
-        await this.create(req, res, next, 'guest')
-    }
-
-
   async adminGetAll(req, res, next) {
     try {
       const orders = await orderService.getAll();
@@ -48,22 +35,16 @@ class OrderController {
     }
   }
 
-  async create(req, res, next, role) {
+  async create(req, res, next) {
     try {
-      const { name, email, phone, address, comment = null } = req.body;
+      const { name, email, phone, address, items, comment, userId } = req.body;
       const { basketId } = req.signedCookies;
-      let items, userId;
-      if (role === 'ADMIN') {
-        items = req.body.items;
-        userId = req.body.userId ?? null;
-      } else {
-        if (!basketId) next(ApiError.badRequest('Ваш кошик порожній'));
-        const basket = await BasketProdact.findAll({
-          where: { basketId: parseInt(basketId) },
-        });
-        if (basket.length === 0)
-          next(ApiError.badRequest('Ваш кошик порожній'));
-      }
+      if (!basketId) next(ApiError.badRequest('Ваш кошик порожній'));
+      const basket = await BasketProdact.findAll({
+        where: { basketId: parseInt(basketId) },
+      });
+      if (basket.length === 0) next(ApiError.badRequest('Ваш кошик порожній'));
+
       const order = await orderService.create({
         name,
         email,
@@ -106,12 +87,11 @@ class OrderController {
       const userId = req.auth.id;
       const { id } = req.params;
       const order = await orderService.getOne(id, userId);
-      return res.json(order)
+      return res.json(order);
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
   }
-
 }
 
 export const orderController = new OrderController();

@@ -30,7 +30,7 @@ class UserController {
         return res.json(userData);
       }
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async login(req, res, next) {
@@ -45,7 +45,7 @@ class UserController {
       });
       return res.json(userData);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async logout(req, res, next) {
@@ -56,10 +56,9 @@ class UserController {
         secure: true,
         sameSite: 'none',
       });
-      // res.clearCookie('basketId');
       return res.json(token);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async activate(req, res, next) {
@@ -68,7 +67,7 @@ class UserController {
       await userService.activate(activationLink);
       return res.redirect(process.env.CLIENT_URL);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
   async refresh(req, res, next) {
@@ -83,7 +82,7 @@ class UserController {
       });
       return res.json(userData);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -108,7 +107,7 @@ class UserController {
       const user = await userService.getUser(token);
       return res.json(user);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -118,7 +117,7 @@ class UserController {
       const userData = await userService.forgotPassword(email);
       return res.json(userData);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -128,7 +127,7 @@ class UserController {
       const userData = await userService.resetPassword(newPass, resetLink);
       return res.json(userData);
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 }

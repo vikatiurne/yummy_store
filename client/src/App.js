@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import MainLayout from './hoc/Layuot/MainLayout';
@@ -7,14 +7,23 @@ import { ForgotPassword } from './components';
 import { Admin, Auth, Basket, Checkout, Home, Prodact } from './pages';
 
 import { fetchAutoLogin } from './pages/Auth/AuthSlice';
+import { fetchGetBasket } from './pages/Basket/BasketSlice';
 
 function App() {
+  const user = useSelector((state) => state.auth.user);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!!token) dispatch(fetchAutoLogin(token));
-  });
+  }, [dispatch]);
+
+  useEffect(() => {
+    !!user.id
+      ? dispatch(fetchGetBasket(user.id))
+      : dispatch(fetchGetBasket({ userId: null }));
+  }, [dispatch, user.id]);
 
   return (
     <BrowserRouter>

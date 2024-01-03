@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import { googleOAuthService } from '../service/google-oauth-service.js';
 import { tokenService } from '../service/token-service.js';
+import { ApiError } from '../error/ApiError.js';
 
 class GoogleAuthController {
   getGoogleOAuthUrl() {
@@ -24,7 +25,7 @@ class GoogleAuthController {
   async getGoogleUser(req, res, next) {
     try {
       const { code } = req.query;
-
+ 
       const { id_token, access_token } =
         await googleOAuthService.getGoogleTokens({
           code,
@@ -52,7 +53,7 @@ class GoogleAuthController {
       res.redirect(process.env.CLIENT_URL);
     } catch (error) {
       console.log(`Не вдалося отримати данні користувача`);
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 
@@ -71,7 +72,7 @@ class GoogleAuthController {
         return await res.json(user);
       }
     } catch (error) {
-      next(error);
+      next(ApiError.badRequest(error.message));
     }
   }
 }
