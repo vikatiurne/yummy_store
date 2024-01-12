@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
-import { CheckoutForm, LoginForm, Order } from '../../components';
+import { CheckoutForm, LoginForm } from '../../components';
 
 import styles from './Checkout.module.css';
-import { Navigate } from 'react-router-dom';
 
 const Checkout = () => {
   const [activeEnterData, setActiveEnterData] = useState(true);
@@ -30,14 +30,14 @@ const Checkout = () => {
       <div>
         <main>
           <div className={styles.toggleSwitch}>
-            <div
+          { status !== 'loading' && <div
               onClick={enterDataHandler}
               className={
                 activeEnterData || isAuth || isGoogleAuth ? styles.active : null
               }
             >
-              <p>Ввести дані</p>
-            </div>
+             <p>Ввести дані</p>
+            </div>}
             {!isAuth && !isGoogleAuth && (
               <div
                 onClick={loginHandler}
@@ -53,10 +53,8 @@ const Checkout = () => {
         <aside></aside>
       </div>
     </div>
-  ) : isAuth || isGoogleAuth ? (
-    <Order />
   ) : (
-    <Navigate to="/" />
+    <Navigate to="../order" />
   );
 };
 

@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import styles from './Order.module.css';
 
 const Order = () => {
   const [detailsActive, setDetailsActive] = useState(false);
-
   const order = useSelector((state) => state.order.order);
   const numOrder = useSelector((state) => state.order.numOrder);
   const comment = useSelector((state) => state.order.comment);
@@ -14,16 +14,21 @@ const Order = () => {
   const orderStatus = useSelector((state) => state.order.orderStatus);
   const address = useSelector((state) => state.order.address);
 
+
   const detailsHandler = () => setDetailsActive((prev) => !prev);
 
   const render = (
-    <div>
-      <p>Ваше замовлення {numOrder} оформлено</p>
-      <p>Сума до сплати {amount}грн </p>
-      <p>Доставка: {address}</p>
-      <p>Статус: {orderStatus}</p>
-      <div>
-        <p onClick={detailsHandler}>Деталі замовлення</p>
+    <div className={styles.orderContainer}>
+      <p className={styles.orderNum}>Ваше замовлення №{numOrder} оформлено</p>
+
+      <div className={styles.orderInfo}>
+        <p>Сума до сплати {amount}грн </p>
+        <p>Доставка: {address}</p>
+        <p>Статус: {orderStatus}</p>
+
+        <div onClick={detailsHandler} className={styles.orderDetail}>
+          <p>Деталі замовлення</p>
+        </div>
         {detailsActive && (
           <>
             <table className={styles.table}>
@@ -44,7 +49,7 @@ const Order = () => {
       </div>
     </div>
   );
-  return render;
+  return !!order.length ? render : <Navigate to="/" />;
 };
 
 export default Order;

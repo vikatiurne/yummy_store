@@ -31,7 +31,7 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
+  // const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const err = useSelector((state) => state.auth.error);
   const url = useSelector((state) => state.auth.redirectUrl);
@@ -39,11 +39,11 @@ const LoginForm = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!isGoogleAuth) {
+    if (!isAuth) {
       dispatch(fetchGetRedirectUrl());
       dispatch(getLocation(pathname));
     }
-  }, [dispatch, isGoogleAuth, pathname]);
+  }, [dispatch, isAuth, pathname]);
 
   useEffect(() => {
     if (!!err) setModalActive(true);
@@ -201,7 +201,7 @@ const LoginForm = () => {
     <>
       <AuthModal active={modalActive} setActive={clickModalHandler} />
 
-      {!isAuth || !isGoogleAuth ? render : <Navigate to="/" />}
+      {!isAuth  ? render : <Navigate to="/" />}
     </>
   );
 };

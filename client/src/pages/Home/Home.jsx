@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import { Categories, Pagination, SortBy, Prodacts } from '../../components';
 
@@ -13,7 +14,6 @@ import {
 import { fetchGetGoogleUser } from '../Auth/AuthSlice';
 
 import styles from './Home.module.css';
-import { Navigate } from 'react-router-dom';
 
 function Home() {
   const categoryId = useSelector((state) => state.home.categoryId);

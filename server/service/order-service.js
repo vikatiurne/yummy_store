@@ -1,11 +1,30 @@
 import { Order, OrderItem } from '../models/models.js';
+import { mailService } from './mail-service.js';
 
 class OrderService {
   async getAll(userId = null) {
     let orders;
     userId
-      ? (orders = await Order.findAll({ where: { userId } }))
-      : (orders = await Order.findAll());
+      ? (orders = await Order.findAll({
+          where: { userId },
+          include: [
+            {
+              model: OrderItem,
+              as: 'items',
+              attributes: ['name', 'price', 'qty'],
+            },
+          ],
+        }))
+      : (orders = await Order.findAll({
+          include: [
+            {
+              model: OrderItem,
+              as: 'items',
+              attributes: ['name', 'price', 'qty'],
+            },
+          ],
+        }));
+    return orders;
   }
 
   async getOne(id, userId = null) {
@@ -35,21 +54,15 @@ class OrderService {
   }
 
   async create(data) {
-    const {
-      name,
-      email,
-      phone,
-      address,
-      comment,
-      items,
-      userId = null,
-    } = data;
-    const amount = items
-      .map(
-        (item) =>
-          item.basket_prodact.qty * (item.price / parseInt(item.sizes[0]))
-      )
-      .reduce((acc, val) => acc + val, 0);
+    const { name, email, phone, address, comment, items, userId = null } = data;
+    const amount = Math.round(
+      items
+        .map(
+          (item) =>
+            item.basket_prodact.qty * (item.price / parseInt(item.sizes[0]))
+        )
+        .reduce((acc, val) => acc + val, 0)
+    );
 
     const order = await Order.create({
       name,
@@ -60,6 +73,13 @@ class OrderService {
       amount,
       userId,
     });
+    const date = new Date();
+    const dd = String(date.getDate()).padStart(2, '0');
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    const orderNum = `${yyyy}-${mm}-${dd}_${order.id}`;
+    await mailService.sendClientOrderMail(email, orderNum, amount);
+    await mailService.sendAdminOrderMail(order);
 
     for (let item of items) {
       await OrderItem.create({

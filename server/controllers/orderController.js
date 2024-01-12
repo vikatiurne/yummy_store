@@ -54,9 +54,11 @@ class OrderController {
         items,
         userId,
       });
+      console.log("NZIOERR:")
       await basketService.clear(basketId, userId);
       res.json(order);
     } catch (error) {
+      console.log("ERR:", error.message)
       next(ApiError.badRequest(error.message));
     }
   }
@@ -74,7 +76,7 @@ class OrderController {
 
   async userGetAll(req, res, next) {
     try {
-      const { id } = req.auth;
+      const { id } = req.user;
       const orders = await orderService.getAll(id);
       return res.json(orders);
     } catch (error) {
@@ -84,7 +86,7 @@ class OrderController {
 
   async userGetOne(req, res, next) {
     try {
-      const userId = req.auth.id;
+      const userId = req.user.id;
       const { id } = req.params;
       const order = await orderService.getOne(id, userId);
       return res.json(order);

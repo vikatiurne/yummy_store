@@ -37,6 +37,34 @@ class MailService {
                 </div>`,
     });
   }
+
+  async sendClientOrderMail(to, orderNum, amount) {
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to,
+      subject: `Замовлення на ${process.env.API_URL}`,
+      text: '',
+      html: ` <div>
+                    <h1>Дякуємо за Ваше замовлення!!!</h1>
+                    <p>№${orderNum} на суму ${amount}грн </p>
+                    <p>Деталі замовлення доступні в особистому кабінеті на сайті ${process.env.CLIENT_URL} </p>
+                    <p>Наш консультант зателефонує вам в найближчий час для уточнення деталей</p>
+                </div>`,
+    });
+  }
+  async sendAdminOrderMail(data) {
+    await this.transporter.sendMail({
+      from: process.env.SMTP_USER,
+      to: process.env.SMTP_USER,
+      subject: `Нове замовлення на ${process.env.CLIENT_URL}`,
+      text: '',
+      html: ` <div>
+                    <h1>Замовлення №${data.id} від ${data.name} на суму ${data.amount}грн</h1>
+                    <h2>Tелефон: ${data.phone}, ${data.name} </h2>
+                    <p>Коментарій: ${data.comment}</p>
+                </div>`,
+    });
+  }
 }
 
 export const mailService = new MailService();

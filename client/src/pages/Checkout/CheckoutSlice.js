@@ -15,13 +15,14 @@ export const fetchGuestCreateOrder = createAsyncThunk(
   'order/fetchGuestCreateOrder',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await OrderService.guestCreate(data);
+      const response = await OrderService.create(data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 const CheckoutSlice = createSlice({
   name: 'order',
   initialState,
@@ -53,6 +54,7 @@ const CheckoutSlice = createSlice({
       })
       .addCase(fetchGuestCreateOrder.rejected, (state, { payload }) => {
         state.status = 'error';
+        // console.log(payload)
       });
   },
 });

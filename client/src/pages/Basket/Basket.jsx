@@ -12,10 +12,10 @@ import {
   fetchIncrement,
   fetchRemoveProdact,
 } from './BasketSlice';
+import { resetOrder } from '../Checkout/CheckoutSlice';
 
 import emptyBasketLogo from '../../assets/empty_basket.png';
 import styles from './Basket.module.css';
-import { resetOrder } from '../Checkout/CheckoutSlice';
 
 const Basket = () => {
   const totalPrice = useSelector((state) => state.basket.totalPrice);

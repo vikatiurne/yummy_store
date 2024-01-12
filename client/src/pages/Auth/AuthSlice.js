@@ -1,14 +1,16 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthServices from '../../services/AuthServices';
+import GetServices from '../../services/GetServices';
 
 const initialState = {
   user: {},
   isAuth: false,
+  isLogout: false,
   status: 'idle',
   error: null,
   msg: null,
   redirectUrl: '',
-  isGoogleAuth: false,
+  // isGoogleAuth: false,
   pathname: '',
   prevLocation: '/',
 };
@@ -25,8 +27,9 @@ export const fetchLogin = createAsyncThunk(
 );
 export const fetchAutoLogin = createAsyncThunk(
   'auth/fetchAutoLogin',
-  async (token) => await AuthServices.autoLogin(token)
+  async () => await AuthServices.autoLogin()
 );
+
 export const fetchRegistration = createAsyncThunk(
   'auth/fetchRegistration',
   async ({ email, password, name }, { rejectWithValue }) => {
@@ -65,6 +68,11 @@ export const fetchGetGoogleUser = createAsyncThunk(
   async () => await AuthServices.getGoogleUser()
 );
 
+export const fetchGetUser = createAsyncThunk(
+  'auth/fetchGetUser',
+  async () => await GetServices.getUser()
+);
+
 export const fetchGetRedirectUrl = createAsyncThunk(
   'auth/fetchGetRedirectUrl',
   async () => await AuthServices.getGoogleRedirectUrl()
@@ -87,6 +95,7 @@ const authSlice = createSlice({
       .addCase(fetchLogin.pending, (state) => {
         state.status = 'loading';
         state.error = null;
+        state.isLogout=false
       })
       .addCase(fetchLogin.fulfilled, (state, { payload }) => {
         state.status = 'success';
@@ -147,7 +156,8 @@ const authSlice = createSlice({
         state.status = 'success';
         state.error = null;
         state.isAuth = false;
-        state.isGoogleAuth = false;
+        // state.isGoogleAuth = false;
+        state.isLogout = true;
         state.user = {};
       })
       .addCase(fetchLogout.rejected, (state) => {
@@ -158,10 +168,12 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAutoLogin.fulfilled, (state, { payload }) => {
-        state.user = payload.data;
+        console.log(payload)
+        state.status = 'success';
+        state.user = payload.data.user;
         state.error = payload.message;
         state.isAuth = true;
-        state.isGoogleAuth = true;
+        // state.isGoogleAuth = true;
       })
       .addCase(fetchAutoLogin.rejected, (state) => {
         state.status = 'error';
@@ -195,13 +207,15 @@ const authSlice = createSlice({
       .addCase(fetchGetGoogleUser.fulfilled, (state, { payload }) => {
         state.user = payload.data.user;
         localStorage.setItem('token', payload.data.accessToken);
-        state.isGoogleAuth = true;
+        // state.isGoogleAuth = true;
+        state.isAuth = true;
         state.prevLocation = localStorage.getItem('location');
         localStorage.removeItem('location');
       })
       .addCase(fetchGetGoogleUser.rejected, (state, { payload }) => {
+        console.log(payload);
         state.status = 'error';
-        state.error = payload.message
+        // state.error = payload.message
       })
       .addCase(fetchGetRedirectUrl.pending, (state) => {
         localStorage.removeItem('location');

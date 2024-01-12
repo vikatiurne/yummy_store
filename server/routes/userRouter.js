@@ -17,8 +17,8 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
-router.get('/auth', authMiddleware, userController.check);
-router.get('/user', userController.getUser);
+// router.get('/auth', authMiddleware, userController.check);
+// router.get('/user', userController.getUser);
 router.put('/forgot-password', userController.forgotPassword);
 router.put('/reset-password', userController.resetPassword);
 

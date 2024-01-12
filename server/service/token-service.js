@@ -4,7 +4,7 @@ import { Token } from '../models/models.js';
 class TokenService {
   generateTokens(payload) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-      expiresIn: '15m',
+      expiresIn: '2m',
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: '30d',
@@ -19,10 +19,8 @@ class TokenService {
     return token;
   }
   validateAccessToken(token) {
-    console.log('acsecctoken', token)
     try {
       const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-      console.log("userData:", userData)
       return userData;
     } catch (error) {
       return null;

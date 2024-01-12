@@ -13,10 +13,11 @@ import { getTotalPrice } from '../../pages/Basket/BasketSlice';
 
 const Header = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
+  // const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
   const user = useSelector((state) => state.auth.user);
   const price = useSelector((state) => state.basket.totalPrice);
   const orders = useSelector((state) => state.basket.order);
+  console.log(user)
 
   const dispatch = useDispatch();
 
@@ -45,7 +46,7 @@ const Header = () => {
   return (
     <div className={styles.logoWrapper}>
       <Button className={styles.basket}>
-        {!isAuth && !isGoogleAuth ? (
+        {!isAuth  ? (
           <>
             <Link to="auth">
               <p>Вхід</p>
@@ -58,14 +59,14 @@ const Header = () => {
             <span />
           </>
         )}
-        {!isAuth && !isGoogleAuth ? (
+        {!isAuth  ? (
           <IoPerson className={styles.basketIcon} onClick={() => {}} />
         ) : (
           <>
             {user.role === 'ADMIN' ? (
               <p onClick={() => navigate('/admin')}>Адмін</p>
             ) : (
-              <p>{user.name}</p>
+              <p onClick={() => navigate('/office')}>{user.name}</p>
             )}
           </>
         )}

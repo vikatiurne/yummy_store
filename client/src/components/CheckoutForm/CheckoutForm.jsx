@@ -1,19 +1,24 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import styles from './CheckoutForm.module.css';
-import { useState } from 'react';
 import { fetchGuestCreateOrder } from '../../pages/Checkout/CheckoutSlice';
 import { resetBasket } from '../../pages/Basket/BasketSlice';
 
+import { spinners } from '../UI/Spinner/Spiner';
+
+import styles from './CheckoutForm.module.css';
+
 const CheckoutForm = () => {
   const [isDelivery, setIsDelivery] = useState(false);
-  
+
   const order = useSelector((state) => state.basket.order);
-  
+
   const user = useSelector((state) => state.auth.user);
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
+
+  const status = useSelector((state) => state.order.status);
 
   const dispatch = useDispatch();
 
@@ -46,19 +51,14 @@ const CheckoutForm = () => {
       items: order,
       userId: user.id ?? null,
     };
-    if (user.role === 'ADMIN') {
-      console.log('adm');
-    } else if (user.role === 'user') {
-      console.log('user');
-    } else {
-      dispatch(fetchGuestCreateOrder(inputData));
-    }
+
+    dispatch(fetchGuestCreateOrder(inputData));
     dispatch(resetBasket());
     setIsDelivery(false);
     reset();
   };
 
-  return (
+  return status !== 'loading' ? (
     <form className={styles.formWrapper} onSubmit={handleSubmit(onSubmit)}>
       <div className={styles.formFields}>
         <input
@@ -177,6 +177,8 @@ const CheckoutForm = () => {
       </div>
       <button className={styles.success}>Відправити</button>
     </form>
+  ) : (
+    spinners.threeDots()
   );
 };
 

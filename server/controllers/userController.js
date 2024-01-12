@@ -86,19 +86,19 @@ class UserController {
     }
   }
 
-  async check(req, res, next) {
-    const { email } = req.user;
-    const user = await User.findOne({ where: { email } });
-    const userDto = new UserDto(user);
-    const tokens = tokenService.generateTokens({ ...userDto });
-    await tokenService.saveToken(
-      userDto.id,
-      tokens.refreshToken,
-      tokens.accessToken
-    );
+  // async check(req, res, next) {
+  //   const { email } = req.user;
+  //   const user = await User.findOne({ where: { email } });
+  //   const userDto = new UserDto(user);
+  //   const tokens = tokenService.generateTokens({ ...userDto });
+  //   await tokenService.saveToken(
+  //     userDto.id,
+  //     tokens.refreshToken,
+  //     tokens.accessToken
+  //   );
 
-    return res.json({ ...tokens });
-  }
+  //   return res.json({ ...tokens });
+  // }
 
   async getUser(req, res, next) {
     try {

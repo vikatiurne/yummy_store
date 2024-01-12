@@ -1,4 +1,5 @@
 import $api from '../http/axios';
+import axios from 'axios';
 
 export default class AuthServices {
   static async login(email, password) {
@@ -10,12 +11,17 @@ export default class AuthServices {
   static async logout() {
     return $api.post('/api/user/logout');
   }
-  static async autoLogin(token) {
-    const header = `Bearer ${token}`;
-    return await $api.get('/api/user/user', {
-      headers: { Authorization: header },
+  static async autoLogin() {
+    return await axios.get(`${process.env.REACT_APP_API_URL}api/user/refresh`, {
+      withCredentials: true,
     });
   }
+  // static async autoLogin(token) {
+  //   const header = `Bearer ${token}`;
+  //   return await $api.get('/api/user/user', {
+  //     headers: { Authorization: header },
+  //   });
+  // }
 
   static async forgotPassword(email) {
     return $api.put('/api/user/forgot-password', { email });

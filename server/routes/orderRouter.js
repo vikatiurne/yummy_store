@@ -23,12 +23,7 @@ router.get(
   checkRoleMiddleware('ADMIN'),
   orderController.adminGetOne
 );
-router.post(
-  '/admin/create',
-  authMiddleware,
-  checkRoleMiddleware('ADMIN'),
-  orderController.create
-);
+
 router.delete(
   '/admin/delete/:id',
   authMiddleware,
@@ -38,8 +33,9 @@ router.delete(
 
 router.get('/user/getAll', authMiddleware, orderController.userGetAll);
 router.get('/user/getOne/:id', authMiddleware, orderController.userGetOne);
-router.post('/user/create', authMiddleware, orderController.create);
 
-router.post('/guest/create', orderController.create);
+
+router.post('/create', orderController.create);
+
 
 export { router as orderRouter };

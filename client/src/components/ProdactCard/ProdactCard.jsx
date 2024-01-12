@@ -6,9 +6,9 @@ import { RiDeleteBin2Line } from 'react-icons/ri';
 
 import Rating from '../Rating/Rating';
 import { fetchAppendProdact } from '../../pages/Basket/BasketSlice';
+import { fetchDeleteProdact } from '../../pages/Admin/AdminSlice';
 
 import styles from './ProdactCard.module.css';
-import { fetchDeleteProdact } from '../../pages/Admin/AdminSlice';
 
 const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
   const [activeSize, setActiveSize] = useState(sizes[0]);
@@ -60,12 +60,12 @@ const ProdactCard = ({ img, name, sizes, price, rating, id }) => {
       </ul>
       <div className={styles.priceInfo}>
         <p>від {price}₴</p>
-        {user.role !== 'ADMIN' && (
+        {/* {user.role !== 'ADMIN' && ( */}
           <button onClick={addHandler}>
             <FaPlus className={styles.iconPlus} /> Додати{' '}
             <span>{qtyProdact}</span>
           </button>
-        )}
+        {/* )} */}
       </div>
       <div className={styles.footerCard}>
         <div className={styles.moreInfo} onClick={redirectHandler}>

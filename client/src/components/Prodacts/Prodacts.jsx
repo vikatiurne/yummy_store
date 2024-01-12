@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { ProdactCard } from '..';
+
 import styles from './Prodacts.module.css';
 
 const Prodacts = () => {

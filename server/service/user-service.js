@@ -82,7 +82,7 @@ class UserService {
     if (!tokenFromDb || !userData) {
       throw ApiError.unauthorizedError();
     }
-    const user = await User.findByPk(userData.id);
+    const user = await User.findOne({ where: { email: userData.email } });
     const userDto = new UserDto(user);
     const tokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(
@@ -94,12 +94,12 @@ class UserService {
     return { ...tokens, user: userDto };
   }
 
-  async getUser(token) {
-    const tokenData = await tokenService.findAccessToken(token);
-    const user = await User.findByPk(tokenData.userId);
-    const userDto = new UserDto(user);
-    return userDto;
-  }
+  // async getUser(token) {
+  //   const tokenData = await tokenService.findAccessToken(token);
+  //   const user = await User.findByPk(tokenData.userId);
+  //   const userDto = new UserDto(user);
+  //   return userDto;
+  // }
 
   async forgotPassword(email) {
     const user = await User.findOne({ where: { email } });

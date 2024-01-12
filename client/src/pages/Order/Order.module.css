@@ -1,0 +1,41 @@
+.orderContainer {
+  padding-top: 1.5rem;
+  margin: 0 auto;
+  max-width: 40rem;
+}
+.orderNum {
+  margin-bottom: 2rem;
+  font-size: 1.4rem;
+  text-align: center;
+}
+.orderInfo p{
+  margin-bottom: 1.4rem;
+  font-size: 1.1rem;
+}
+.orderDetail p{
+  display: block;
+  text-align: center;
+  cursor: pointer;
+  margin: 1rem auto 0;
+  padding: 0.3rem;
+  background-color: #6e1e93;
+  border-radius: 5px;
+  text-transform: uppercase;
+  color: white;
+}
+.table {
+  border-collapse: collapse;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #6d1e93;
+  width: 100%;
+}
+.table * {
+  padding: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+.table img {
+  max-width: 4rem;
+}
+.table tr {
+  border-bottom: 1px solid #6d1e93;
+}
