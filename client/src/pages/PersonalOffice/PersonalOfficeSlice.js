@@ -5,14 +5,17 @@ const initialState = {
   status: 'idle',
   userOrders: [],
   userData: {},
-  order:[],
+  order: [],
+  count: null,
+  limit: 8,
+  page: 1,
 };
 
 export const fetchUserGetAll = createAsyncThunk(
   'order/fetchUserGetAll',
-  async (id, { rejectWithValue }) => {
+  async ({ id, page, limit, orderBy, sortBy = 'ASC' }, { rejectWithValue }) => {
     try {
-      const response = await OrderService.userGetAll(id);
+      const response = await OrderService.userGetAll(id, page, limit);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -20,9 +23,9 @@ export const fetchUserGetAll = createAsyncThunk(
   }
 );
 
-export const fetchUserGetOne=createAsyncThunk(
-  'order/fetchUserGetOne', 
-  async (id, {rejectWithValue})=>{
+export const fetchUserGetOne = createAsyncThunk(
+  'order/fetchUserGetOne',
+  async (id, { rejectWithValue }) => {
     try {
       const response = await OrderService.userGetOne(id);
       return response.data;
@@ -30,10 +33,22 @@ export const fetchUserGetOne=createAsyncThunk(
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
 const PersonalOfficeSlice = createSlice({
   name: 'userOffice',
   initialState,
+  reducers: {
+    selectedLimit: {
+      reducer(state, { payload }) {
+        state.limit = payload;
+      },
+    },
+    selectedPage: {
+      reducer(state, { payload }) {
+        state.page = payload;
+      },
+    },
+  },
   extraReducers(builder) {
     builder
 
@@ -43,7 +58,8 @@ const PersonalOfficeSlice = createSlice({
       .addCase(fetchUserGetAll.fulfilled, (state, { payload }) => {
         console.log(payload);
         state.status = 'success';
-        state.userOrders = payload;
+        state.userOrders = payload.rows;
+        state.count = payload.count;
       })
       .addCase(fetchUserGetAll.rejected, (state, { payload }) => {
         state.status = 'error';
@@ -64,4 +80,5 @@ const PersonalOfficeSlice = createSlice({
   },
 });
 
+export const { selectedLimit, selectedPage } = PersonalOfficeSlice.actions;
 export default PersonalOfficeSlice.reducer;

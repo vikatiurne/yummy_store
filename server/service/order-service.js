@@ -2,28 +2,65 @@ import { Order, OrderItem } from '../models/models.js';
 import { mailService } from './mail-service.js';
 
 class OrderService {
-  async getAll(userId = null) {
+  async getAll(userId = null, page, limit) {
+    page = page || 1;
+    limit = limit || 8;
+    let offset = (page - 1) * limit;
+
+    const queries = {
+      offset,
+      limit,
+      subQuery: false,
+    };
+   
+      queries.order = [['id', 'DESC']];
+    
     let orders;
     userId
-      ? (orders = await Order.findAll({
+      ? (orders = await Order.findAndCountAll({
           where: { userId },
+          ...queries,
           include: [
             {
               model: OrderItem,
               as: 'items',
               attributes: ['name', 'price', 'qty'],
+              separate: true
             },
           ],
+          distinct: true,
         }))
-      : (orders = await Order.findAll({
+      : (orders = await Order.findAndCountAll({
+          ...queries,
           include: [
             {
               model: OrderItem,
               as: 'items',
               attributes: ['name', 'price', 'qty'],
+              separate: true
             },
           ],
+          distinct: true,
         }));
+    // ? (orders = await Order.findAll({
+    //     where: { userId },
+    //     include: [
+    //       {
+    //         model: OrderItem,
+    //         as: 'items',
+    //         attributes: ['name', 'price', 'qty'],
+    //       },
+    //     ],
+    //   }))
+    // : (orders = await Order.findAll({
+    //     include: [
+    //       {
+    //         model: OrderItem,
+    //         as: 'items',
+    //         attributes: ['name', 'price', 'qty'],
+    //       },
+    //     ],
+    //   }));
     return orders;
   }
 

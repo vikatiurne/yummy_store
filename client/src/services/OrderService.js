@@ -16,8 +16,10 @@ export default class OrderService {
   static async adminDelete(orderId) {
     return $api.post(`api/order/admin/delete/${orderId}`);
   }
-  static async userGetAll(userId) {
-    return $api.get('api/order/user/getAll', { params: { userId } });
+  static async userGetAll(userId, page, limit) {
+    return $api.get('api/order/user/getAll', {
+      params: { userId, page, limit },
+    });
   }
   static async userGetOne(orderId, userId) {
     return $api.get(`api/order/user/getOne/${orderId}`, { params: { userId } });

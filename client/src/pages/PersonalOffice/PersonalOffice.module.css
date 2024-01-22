@@ -1,0 +1,49 @@
+table {
+  margin-bottom: 1rem;
+  border-collapse: collapse;
+  font-size: 1.2rem;
+  max-width: 40rem;
+  width: 100%;
+}
+table * {
+  padding: 0.5rem;
+  font-family: 'Roboto', sans-serif;
+}
+table tr {
+  text-align: center;
+  border-bottom: 2px solid #6d1e93;
+  cursor: pointer;
+}
+table tr td:nth-child(2),
+table tr td:nth-child(1) {
+  text-align: left;
+}
+table tr td:last-child {
+  text-align: right;
+}
+table tr td:last-child p {
+  padding: 0.1rem;
+}
+.orderStatus p {
+  padding: 0.3rem;
+  text-transform: uppercase;
+  border-radius: 12px;
+}
+
+.orderStatusNew p {
+  background-color: #d68ef7;
+}
+.orderStatusWork p {
+  background-color: #b662dd;
+}
+.orderStatusReady p {
+  background-color: #8d34b6;
+}
+.orderStatusDone p {
+  background-color: #520b73;
+  color: white;
+}
+.updateText {
+  font-size: 1rem;
+  color: gray;
+}

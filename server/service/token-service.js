@@ -4,7 +4,7 @@ import { Token } from '../models/models.js';
 class TokenService {
   generateTokens(payload) {
     const accessToken = jwt.sign(payload, process.env.JWT_ACCESS_SECRET, {
-      expiresIn: '2m',
+      expiresIn: '30s',
     });
     const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET, {
       expiresIn: '30d',
@@ -15,7 +15,7 @@ class TokenService {
     const token = jwt.sign(payload, process.env.JWT_RESET_PASSWORD_SECRET, {
       expiresIn: '20m',
     });
-    
+
     return token;
   }
   validateAccessToken(token) {

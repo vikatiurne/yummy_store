@@ -4,7 +4,6 @@ import { tokenService } from '../service/token-service.js';
 export default function authMiddleware(req, res, next) {
   try {
     const autorizationHeader = req.headers.authorization;
-    console.log("autorizationHeader:", autorizationHeader)
     if (!autorizationHeader) {
       return next(ApiError.unauthorizedError());
     }
@@ -13,7 +12,6 @@ export default function authMiddleware(req, res, next) {
       return next(ApiError.unauthorizedError());
     }
     const userData = tokenService.validateAccessToken(accessToken);
-    console.log("autorizationHeader:", accessToken)
     if (!userData) {
       return next(ApiError.unauthorizedError());
     }

@@ -19,12 +19,19 @@ $api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    if (error.response.status === 401) {
+    if (
+      error.response.status === 401 &&
+      error.config &&
+      !error.config._isRetry
+    ) {
+      originalRequest._isRetry = true;
       try {
         const response = await axios.get(
           `${process.env.REACT_APP_API_URL}api/user/refresh`,
           { withCredentials: true }
         );
+
+        console.log(response)
 
         localStorage.setItem('token', response.data.accessToken);
         return $api.request(originalRequest);
@@ -32,6 +39,7 @@ $api.interceptors.response.use(
         console.error(error);
       }
     }
+    throw error;
   }
 );
 

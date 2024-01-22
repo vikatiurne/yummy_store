@@ -173,6 +173,7 @@ const authSlice = createSlice({
         state.user = payload.data.user;
         state.error = payload.message;
         state.isAuth = true;
+        localStorage.setItem('token', payload.data.accessToken)
         // state.isGoogleAuth = true;
       })
       .addCase(fetchAutoLogin.rejected, (state) => {
@@ -194,6 +195,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchResetPassword.fulfilled, (state, { payload }) => {
+        state.status = 'success';
         state.msg = payload.data.message;
       })
       .addCase(fetchResetPassword.rejected, (state, { payload }) => {
@@ -205,6 +207,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchGetGoogleUser.fulfilled, (state, { payload }) => {
+        state.status = 'success';
         state.user = payload.data.user;
         localStorage.setItem('token', payload.data.accessToken);
         // state.isGoogleAuth = true;

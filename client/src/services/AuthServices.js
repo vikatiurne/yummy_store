@@ -16,13 +16,7 @@ export default class AuthServices {
       withCredentials: true,
     });
   }
-  // static async autoLogin(token) {
-  //   const header = `Bearer ${token}`;
-  //   return await $api.get('/api/user/user', {
-  //     headers: { Authorization: header },
-  //   });
-  // }
-
+  
   static async forgotPassword(email) {
     return $api.put('/api/user/forgot-password', { email });
   }
