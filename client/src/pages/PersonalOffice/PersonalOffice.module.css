@@ -11,6 +11,7 @@
   width: max-content;
   text-transform: uppercase;
   font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
 }
 .officeMain h1::after {
   display: block;
@@ -40,24 +41,32 @@
   color: white;
   text-transform: uppercase;
   background-color: #b662dd;
+  cursor: pointer;
 }
 .activeBtn {
   background-color: #6d1e93;
   border-bottom-right-radius: 20px;
   border-top-right-radius: 20px;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 
 .topBtn {
   margin-bottom: -1rem;
   z-index: 1;
+  font-size: 0.87rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 .topProfileBtn {
   margin-top: -1rem;
+  font-size: 0.87rem;
 }
 .bottomOrderBtn {
   border-top-right-radius: 20px;
+  font-size: 0.87rem;
 }
 .bottomBtn {
   border-bottom-right-radius: 20px;
+  font-size: 0.87rem;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
 

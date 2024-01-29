@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import AuthServices from '../../services/AuthServices';
 import GetServices from '../../services/GetServices';
+import UpdateServices from '../../services/UpdateService';
 
 const initialState = {
   user: {},
@@ -10,7 +11,6 @@ const initialState = {
   error: null,
   msg: null,
   redirectUrl: '',
-  // isGoogleAuth: false,
   pathname: '',
   prevLocation: '/',
 };
@@ -82,6 +82,17 @@ export const fetchLogout = createAsyncThunk('auth/fetchLogout', async () => {
   return await AuthServices.logout();
 });
 
+export const fetchUpdateUser = createAsyncThunk(
+  'auth/fetchUpdateUser',
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      return await UpdateServices.updateUser(id, data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -95,7 +106,7 @@ const authSlice = createSlice({
       .addCase(fetchLogin.pending, (state) => {
         state.status = 'loading';
         state.error = null;
-        state.isLogout=false
+        state.isLogout = false;
       })
       .addCase(fetchLogin.fulfilled, (state, { payload }) => {
         state.status = 'success';
@@ -167,12 +178,12 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchAutoLogin.fulfilled, (state, { payload }) => {
-        console.log(payload)
+        console.log(payload);
         state.status = 'success';
         state.user = payload.data.user;
         state.error = payload.message;
         state.isAuth = true;
-        localStorage.setItem('token', payload.data.accessToken)
+        localStorage.setItem('token', payload.data.accessToken);
       })
       .addCase(fetchAutoLogin.rejected, (state) => {
         state.status = 'error';
@@ -208,7 +219,6 @@ const authSlice = createSlice({
         state.status = 'success';
         state.user = payload.data.user;
         localStorage.setItem('token', payload.data.accessToken);
-        // state.isGoogleAuth = true;
         state.isAuth = true;
         state.prevLocation = localStorage.getItem('location');
         localStorage.removeItem('location');
@@ -224,6 +234,26 @@ const authSlice = createSlice({
       .addCase(fetchGetRedirectUrl.fulfilled, (state, { payload }) => {
         state.redirectUrl = payload.data;
         localStorage.setItem('location', state.pathname);
+      })
+      .addCase(fetchGetUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchGetUser.fulfilled, (state, { payload }) => {
+        state.status = 'success';
+        state.user = payload.data;
+      })
+      .addCase(fetchGetUser.rejected, (state) => {
+        state.status = 'error';
+      })
+      .addCase(fetchUpdateUser.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUpdateUser.fulfilled, (state, { payload }) => {
+        state.status = 'success';
+        state.user = payload.data;
+      })
+      .addCase(fetchUpdateUser.rejected, (state) => {
+        state.status = 'error';
       });
   },
 });

@@ -44,7 +44,7 @@ class ProdactController {
     const queries = {
       offset,
       limit,
-      subQuery:false
+      subQuery: false,
     };
     if (orderBy) {
       queries.order = [[orderBy, sortBy]];
@@ -70,7 +70,7 @@ class ProdactController {
         ...queries,
       });
     }
-    
+
     return await res.json(prodacts);
   }
   async getOne(req, res) {
@@ -92,7 +92,7 @@ class ProdactController {
     await delProd.destroy();
     return res.json(delProd);
   }
-  async updateProdact(req, res) {
+  async updateProdact(req, res, next) {
     const { id } = req.params;
     try {
       const { name, price, categoryId, subcategoryId, sizes, info } = req.body;

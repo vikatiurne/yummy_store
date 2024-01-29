@@ -14,4 +14,8 @@ export default class UpdateServices {
       subcategoryName,
     });
   }
+
+  static async updateUser(id, data) {
+    return await $api.put(`/api/user/user/${id}/update`, data);
+  }
 }

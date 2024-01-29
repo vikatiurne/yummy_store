@@ -5,7 +5,7 @@
 table {
   margin-bottom: 1rem;
   border-collapse: collapse;
-  font-size: 1.2rem;
+  font-size: 1.12rem;
   max-width: 40rem;
   width: 100%;
 }
@@ -18,20 +18,26 @@ table tr {
   border-bottom: 2px solid #6d1e93;
   cursor: pointer;
 }
-table tr td:nth-child(2),
-table tr td:nth-child(1) {
+.orderList td:nth-child(2),
+.orderList td:nth-child(1) {
   text-align: left;
+  font-size: 1rem;
+  font-weight: 600;
 }
-table tr td:last-child {
+.orderList td:last-child {
   text-align: right;
 }
-table tr td:last-child p {
+.orderList td:last-child p:first-child {
   padding: 0.1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 .orderStatus p {
   padding: 0.3rem;
   text-transform: uppercase;
   border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
 
 .orderStatusNew p {
@@ -48,26 +54,40 @@ table tr td:last-child p {
   color: white;
 }
 .updateText {
-  font-size: 1rem;
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: normal;
   color: gray;
 }
 
-.detail {
+.detail p,
+.detail p:last-child {
+  padding: 0;
   text-align: left;
   font-size: 1rem;
 }
+.detail p{
+  margin-bottom: 0.7rem;
+}
+
 .detailItem {
   display: flex;
+  align-items: center;
   gap: 0.7rem;
   padding: 0;
   font-size: 1rem;
 }
+
+
 .hideDetail * {
   padding: 0;
 }
 .hideDetail {
-    margin-top: 0.5rem;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   background-color: #f0d9fb;
+}
+.hideDetail p{
+  margin: 0 0.5rem 0;
 }

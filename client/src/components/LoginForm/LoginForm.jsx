@@ -31,7 +31,6 @@ const LoginForm = () => {
 
   const dispatch = useDispatch();
 
-  // const isGoogleAuth = useSelector((state) => state.auth.isGoogleAuth);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const err = useSelector((state) => state.auth.error);
   const url = useSelector((state) => state.auth.redirectUrl);

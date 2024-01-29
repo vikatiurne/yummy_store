@@ -40,7 +40,6 @@ const CheckoutForm = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data)
     let address;
     !data.address ? (address = data.delivery) : (address = data.address);
     const inputData = {

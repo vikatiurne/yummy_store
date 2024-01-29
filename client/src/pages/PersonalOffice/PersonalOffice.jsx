@@ -9,6 +9,8 @@ import { spinners } from '../../components/UI/Spinner/Spiner';
 import orderImg from '../../assets/order.png';
 import styles from './PersonalOffice.module.css';
 import OrderList from '../../components/OrderList/OrderList';
+import Profile from '../../components/Profile/Profile';
+import { fetchGetUser } from '../Auth/AuthSlice';
 
 const PersonalOffice = () => {
   const [activeBtn, setActiveBtn] = useState('order');
@@ -22,17 +24,17 @@ const PersonalOffice = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUserGetAll({ id: user.id, page, limit }));
-  }, [dispatch, user, page, limit]);
+    if (activeBtn === 'order')
+      dispatch(fetchUserGetAll({ id: user.id, page, limit }));
+  }, [dispatch, user, page, limit, activeBtn]);
 
   const clickOrderBtnHandler = () => {
     setActiveBtn('order');
   };
   const clickProfileBtnHandler = () => {
     setActiveBtn('profile');
+    dispatch(fetchGetUser());
   };
-
-  const renderProfile = <h1>Профіль</h1>;
 
   return (
     <div className={styles.officeWrapper}>
@@ -70,7 +72,7 @@ const PersonalOffice = () => {
                 <img src={orderImg} alt="order" />
               </>
             ) : (
-              renderProfile
+              <Profile />
             )
           ) : (
             <Navigate to="/" />

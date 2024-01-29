@@ -16,7 +16,7 @@ export default function checkRoleMiddleware(role) {
       if (!userData) {
         return next(ApiError.unauthorizedError());
       }
-      if (userData.role !== role) {
+      if (userData.role.toUpperCase() !== role.toUpperCase()) {
         return next(ApiError.forbidden('Доступ має тільки адміністратор'));
       }
       req.user = userData;

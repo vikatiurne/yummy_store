@@ -49,6 +49,12 @@ class UserService {
     await user.save();
   }
 
+  async update(id) {
+    const user = await User.findByPk(id);
+    const userDto = new UserDto(user);
+    return userDto;
+  }
+
   async login(email, password) {
     const user = await User.findOne({ where: { email } });
     if (!user) {

@@ -1,0 +1,76 @@
+.wrapper {
+  max-width: 24.4rem;
+  width: 100%;
+}
+.formFields {
+}
+.formFields div {
+  margin-bottom: 1.8rem;
+  display: flex;
+  justify-content: space-between;
+}
+.formFields input {
+  padding: 0.6rem 2.12rem 0.6rem;
+  font-size: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  border-radius: 3.12rem;
+  background-color: #efefef;
+  box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.25);
+  outline: none;
+  border: none;
+  max-width: 17.3rem;
+  width: 100%;
+}
+label {
+  /* padding-right: 2rem; */
+  font-size: 0.87rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+textarea {
+  margin-bottom: 2.3rem;
+  padding: 0.6rem 2.12rem 0.6rem;
+  height: 5rem;
+  max-width: 17.3rem;
+  width: 100%;
+  font-size: 0.87rem;
+  border-radius: 20px;
+  background-color: #efefef;
+  box-shadow: 0 4px 7px 0 rgba(0, 0, 0, 0.25);
+  outline: none;
+  border: none;
+  resize: none;
+}
+div.formControl {
+  flex-direction: column;
+  max-width: 17.3rem;
+  width: 100%;
+  align-items: center;
+}
+.formControl button,
+.formControl p {
+  margin-bottom: 1.75rem;
+  max-width: 9rem;
+  width: 100%;
+  font-weight: 600;
+  font-size: 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  border-radius: 55px;
+  background-color: #b662dd;
+  color: white;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.31) ;
+}
+.formControl p:last-child {
+  text-align: center;
+  padding: 0.3rem;
+  margin-bottom: 0;
+  background-color: transparent;
+  border: 2px solid #b662dd;
+  color: #b662dd;
+}
+input.redBorder,
+textarea.redBorder {
+  border: 1px solid red;
+}
+

@@ -18,6 +18,7 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/user',checkRoleMiddleware('user'), userController.getUser);
+router.put('/user/:id/update',checkRoleMiddleware('user'), userController.updateUser);
 
 router.put('/forgot-password', userController.forgotPassword);
 router.put('/reset-password', userController.resetPassword);

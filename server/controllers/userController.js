@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import { ApiError } from '../error/ApiError.js';
 // import { User } from '../models/models.js';
 import { userService } from '../service/user-service.js';
+import { User } from '../models/models.js';
 // import { tokenService } from '../service/token-service.js';
 // import { UserDto } from '../dtos/user-dto.js';
 
@@ -66,6 +67,27 @@ class UserController {
       const activationLink = req.params.link;
       await userService.activate(activationLink);
       return res.redirect(process.env.CLIENT_URL);
+    } catch (error) {
+      next(ApiError.badRequest(error.message));
+    }
+  }
+
+  async updateUser(req, res, next) {
+    try {
+      const { id } = req.params;
+      const { name, phone, address, email } = req.body;
+      console.log('data:', id, name, phone, address, email);
+      const userUpdate = await User.update(
+        {
+          name,
+          phone,
+          address,
+          email,
+        },
+        { where: { id } }
+      );
+      const user = await userService.update(id);
+      return await res.json(user);
     } catch (error) {
       next(ApiError.badRequest(error.message));
     }
