@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import { userController } from '../controllers/userController.js';
 import authMiddleware from '../middleware/AuthMiddleware.js';
 import { googleAuthController } from '../controllers/googleAuthController.js';
-
+import checkRoleMiddleware from '../middleware/CheckRoleMiddleware.js';
 
 const router = new Router();
 
@@ -17,16 +17,15 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
-// router.get('/auth', authMiddleware, userController.check);
-// router.get('/user', userController.getUser);
+router.get('/user',checkRoleMiddleware('user'), userController.getUser);
+
 router.put('/forgot-password', userController.forgotPassword);
 router.put('/reset-password', userController.resetPassword);
 
 router.get('/auth/google/url', (req, res) => {
   return res.send(googleAuthController.getGoogleOAuthUrl());
-})
-router.get('/auth/google',googleAuthController.getGoogleUser)
-router.get("/auth/me", googleAuthController.getCurentGoogleUser)
-
+});
+router.get('/auth/google', googleAuthController.getGoogleUser);
+router.get('/auth/me', googleAuthController.getCurentGoogleUser);
 
 export { router as userRouter };

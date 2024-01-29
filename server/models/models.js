@@ -10,6 +10,8 @@ const User = sequelize.define('user', {
   isActivated: { type: DataTypes.BOOLEAN, defaultValue: false },
   activationLink: { type: DataTypes.STRING },
   resetLink: { type: DataTypes.STRING, defaultValue: '' },
+  phone: { type: DataTypes.INTEGER, unique: true },
+  address: { type: DataTypes.STRING },
 });
 
 const Token = sequelize.define('token', {
@@ -71,6 +73,7 @@ const Order = sequelize.define('order', {
   },
   status: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 0 },
   comment: { type: DataTypes.STRING },
+  readinessfor: { type: DataTypes.DATE, allowNull: false },
 });
 
 const OrderItem = sequelize.define('order_item', {

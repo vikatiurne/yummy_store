@@ -14,3 +14,4 @@ export { default as Modal } from '../components/UI/Modal/Modal';
 export { default as Pagination } from '../components/Pagination/Pagination';
 export { default as Rating } from '../components/Rating/Rating';
 export { default as Order } from '../pages/Order/Order';
+export { default as OrderList } from '../components/OrderList/OrderList';

@@ -37,7 +37,7 @@ class OrderController {
 
   async create(req, res, next) {
     try {
-      const { name, email, phone, address, items, comment, userId } = req.body;
+      const { name, email, phone, address, items, comment, userId,readinessfor } = req.body;
       const { basketId } = req.signedCookies;
       if (!basketId) next(ApiError.badRequest('Ваш кошик порожній'));
       const basket = await BasketProdact.findAll({
@@ -53,12 +53,11 @@ class OrderController {
         comment,
         items,
         userId,
+        readinessfor,
       });
-      console.log('NZIOERR:');
       await basketService.clear(basketId, userId);
       res.json(order);
     } catch (error) {
-      console.log('ERR:', error.message);
       next(ApiError.badRequest(error.message));
     }
   }

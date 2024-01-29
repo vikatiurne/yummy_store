@@ -74,14 +74,11 @@ class UserService {
   }
 
   async refresh(refreshToken) {
-    console.log('REFRESH:', refreshToken)
     if (!refreshToken) {
       throw ApiError.unauthorizedError();
     }
     const userData = await tokenService.validateRefreshToken(refreshToken);
-    console.log('userData1:', userData)
     const tokenFromDb = await tokenService.findToken(refreshToken);
-    console.log('tokenFromDb1:', tokenFromDb)
     if (!tokenFromDb || !userData) {
       throw ApiError.unauthorizedError();
     }
@@ -97,12 +94,12 @@ class UserService {
     return { ...tokens, user: userDto };
   }
 
-  // async getUser(token) {
-  //   const tokenData = await tokenService.findAccessToken(token);
-  //   const user = await User.findByPk(tokenData.userId);
-  //   const userDto = new UserDto(user);
-  //   return userDto;
-  // }
+  async getUser(token) {
+    const tokenData = await tokenService.findAccessToken(token);
+    const user = await User.findByPk(tokenData.userId);
+    const userDto = new UserDto(user);
+    return userDto;
+  }
 
   async forgotPassword(email) {
     const user = await User.findOne({ where: { email } });

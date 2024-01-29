@@ -26,8 +26,7 @@ function App() {
   }, [dispatch]);
 
   const user = useSelector((state) => state.auth.user);
-  console.log(user)
-
+ 
   useEffect(() => {
     !!user.id
       ? dispatch(fetchGetBasket(user.id))

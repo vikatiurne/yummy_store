@@ -1,49 +1,63 @@
-table {
-  margin-bottom: 1rem;
-  border-collapse: collapse;
-  font-size: 1.2rem;
-  max-width: 40rem;
+.officeWrapper {
+  display: flex;
+}
+.officeMain {
   width: 100%;
 }
-table * {
-  padding: 0.5rem;
-  font-family: 'Roboto', sans-serif;
-}
-table tr {
-  text-align: center;
-  border-bottom: 2px solid #6d1e93;
-  cursor: pointer;
-}
-table tr td:nth-child(2),
-table tr td:nth-child(1) {
-  text-align: left;
-}
-table tr td:last-child {
-  text-align: right;
-}
-table tr td:last-child p {
-  padding: 0.1rem;
-}
-.orderStatus p {
-  padding: 0.3rem;
+.officeMain h1 {
+  padding-top: 3rem;
+  margin-left: 4.4rem;
+  margin-bottom: 4.6rem;
+  width: max-content;
   text-transform: uppercase;
-  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
 }
-
-.orderStatusNew p {
-  background-color: #d68ef7;
+.officeMain h1::after {
+  display: block;
+  content: '';
+  background-color: #520b73;
+  height: 3px;
+  border-radius: 2px;
 }
-.orderStatusWork p {
+.officeContainer {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+  margin-left: 5rem;
+}
+.officeBtn {
+  margin-top: 12.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.button,
+.activeBtn {
+  padding-top: 1.3rem;
+  padding-left: 0.4rem;
+  width: 8rem;
+  height: 4rem;
+  color: white;
+  text-transform: uppercase;
   background-color: #b662dd;
 }
-.orderStatusReady p {
-  background-color: #8d34b6;
+.activeBtn {
+  background-color: #6d1e93;
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
 }
-.orderStatusDone p {
-  background-color: #520b73;
-  color: white;
+
+.topBtn {
+  margin-bottom: -1rem;
+  z-index: 1;
 }
-.updateText {
-  font-size: 1rem;
-  color: gray;
+.topProfileBtn {
+  margin-top: -1rem;
 }
+.bottomOrderBtn {
+  border-top-right-radius: 20px;
+}
+.bottomBtn {
+  border-bottom-right-radius: 20px;
+}
+

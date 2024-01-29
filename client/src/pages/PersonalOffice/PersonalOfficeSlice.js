@@ -9,11 +9,12 @@ const initialState = {
   count: null,
   limit: 8,
   page: 1,
+  isDetail: false,
 };
 
 export const fetchUserGetAll = createAsyncThunk(
   'order/fetchUserGetAll',
-  async ({ id, page, limit, orderBy, sortBy = 'ASC' }, { rejectWithValue }) => {
+  async ({ id, page, limit }, { rejectWithValue }) => {
     try {
       const response = await OrderService.userGetAll(id, page, limit);
       return response.data;
@@ -48,6 +49,11 @@ const PersonalOfficeSlice = createSlice({
         state.page = payload;
       },
     },
+    hideDetail: {
+      reducer(state) {
+        state.isDetail = false;
+      },
+    },
   },
   extraReducers(builder) {
     builder
@@ -70,8 +76,9 @@ const PersonalOfficeSlice = createSlice({
       })
       .addCase(fetchUserGetOne.fulfilled, (state, { payload }) => {
         console.log(payload);
-        // state.status = 'success';
-        // state.userOrders = payload;
+        state.status = 'success';
+        state.isDetail = true;
+        state.order = payload;
       })
       .addCase(fetchUserGetOne.rejected, (state, { payload }) => {
         state.status = 'error';
@@ -80,5 +87,5 @@ const PersonalOfficeSlice = createSlice({
   },
 });
 
-export const { selectedLimit, selectedPage } = PersonalOfficeSlice.actions;
+export const { selectedLimit, selectedPage,hideDetail } = PersonalOfficeSlice.actions;
 export default PersonalOfficeSlice.reducer;

@@ -9,13 +9,14 @@
 
 body {
   margin: 0;
+  font-family: 'Poppins', sans-serif;
   font-family: 'Roboto', sans-serif;
   font-family: 'Sansita', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button{
+button {
   padding: 0.5rem;
   border: none;
   cursor: pointer;

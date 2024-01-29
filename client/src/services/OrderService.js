@@ -24,12 +24,6 @@ export default class OrderService {
   static async userGetOne(orderId, userId) {
     return $api.get(`api/order/user/getOne/${orderId}`, { params: { userId } });
   }
-  // static async userCreate(data) {
-  //   return $api.post('api/order/user/create', data);
-  // }
-  // static async guestCreate(data) {
-  //   return $api.post('api/order/guest/create',  data  );
-  // }
   static async create(data) {
     return $api.post('api/order/create', data);
   }

@@ -4,6 +4,8 @@ class UserDto {
   id;
   isActivated;
   role;
+  phone;
+  address;
 
   constructor(model) {
     this.id = model.id;
@@ -11,6 +13,8 @@ class UserDto {
     this.email = model.email;
     this.role = model.role;
     this.isActivated = model.isActivated;
+    this.phone = model.phone;
+    this.address = model.address;
   }
 }
 

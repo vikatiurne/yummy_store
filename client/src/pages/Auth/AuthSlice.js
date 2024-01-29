@@ -156,7 +156,6 @@ const authSlice = createSlice({
         state.status = 'success';
         state.error = null;
         state.isAuth = false;
-        // state.isGoogleAuth = false;
         state.isLogout = true;
         state.user = {};
       })
@@ -174,7 +173,6 @@ const authSlice = createSlice({
         state.error = payload.message;
         state.isAuth = true;
         localStorage.setItem('token', payload.data.accessToken)
-        // state.isGoogleAuth = true;
       })
       .addCase(fetchAutoLogin.rejected, (state) => {
         state.status = 'error';

@@ -9,6 +9,7 @@ const initialState = {
   numOrder: null,
   orderStatus: '',
   address: '',
+  readinessFor: '',
 };
 
 export const fetchGuestCreateOrder = createAsyncThunk(
@@ -50,6 +51,7 @@ const CheckoutSlice = createSlice({
         state.comment = payload.comment;
         state.numOrder = payload.createdAt.substring(0, 10) + '_' + payload.id;
         state.address = payload.address;
+        state.readinessFor = payload.readinessfor;
         state.orderStatus = 'замовлення оформлене';
       })
       .addCase(fetchGuestCreateOrder.rejected, (state, { payload }) => {

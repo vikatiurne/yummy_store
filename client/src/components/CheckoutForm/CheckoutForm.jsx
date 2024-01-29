@@ -40,6 +40,7 @@ const CheckoutForm = () => {
   };
 
   const onSubmit = (data) => {
+    console.log(data)
     let address;
     !data.address ? (address = data.delivery) : (address = data.address);
     const inputData = {
@@ -50,6 +51,7 @@ const CheckoutForm = () => {
       comment: data.comment ?? null,
       items: order,
       userId: user.id ?? null,
+      readinessfor: data.date,
     };
 
     dispatch(fetchGuestCreateOrder(inputData));
@@ -166,9 +168,19 @@ const CheckoutForm = () => {
             </>
           )}
         </div>
+
         <div className={styles.errorMessage}>
           {errors?.delivery && <p>Оберіть варіант доставки замовлення</p>}
         </div>
+
+        <input
+          className={!!errors.date ? styles.redBorder : null}
+          type="date"
+          {...register('date', {
+            required: true,
+          })}
+        />
+
         <textarea
           placeholder="Коментарій до замовлення"
           className={styles.comment}

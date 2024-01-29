@@ -18,7 +18,6 @@ $api.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
-
     if (
       error.response.status === 401 &&
       error.config &&
@@ -31,7 +30,7 @@ $api.interceptors.response.use(
           { withCredentials: true }
         );
 
-        console.log(response)
+        
 
         localStorage.setItem('token', response.data.accessToken);
         return $api.request(originalRequest);

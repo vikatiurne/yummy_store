@@ -91,7 +91,7 @@ class OrderService {
   }
 
   async create(data) {
-    const { name, email, phone, address, comment, items, userId = null } = data;
+    const { name, email, phone, address, comment, items, userId = null,readinessfor } = data;
     const amount = Math.round(
       items
         .map(
@@ -109,6 +109,7 @@ class OrderService {
       comment,
       amount,
       userId,
+      readinessfor
     });
     const date = new Date();
     const dd = String(date.getDate()).padStart(2, '0');
